@@ -1,5 +1,5 @@
-EXENAME = finalproj
-OBJS = readFromFile.o main.o
+EXENAME = network
+OBJS = main.o Network.o main.o
 
 CXX = clang++
 CXXFLAGS = $(CS225) -std=c++1y -stdlib=libc++ -c -g -O0 -Wall -Wextra -pedantic
@@ -21,20 +21,35 @@ else
 CLANG_VERSION_MSG = $(warning $(ccyellow) Looks like you are not on EWS. Be sure to test on EWS before the deadline. $(ccend))
 endif
 
-.PHONY: all test clean output_msg
-
 all : $(EXENAME)
 
 output_msg: ; $(CLANG_VERSION_MSG)
 
-$(EXENAME): output_msg $(OBJS)
+$(EXENAME) : output_msg $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
 
-readFromFile.o: main.cpp readFromFile.cpp
-	$(CXX) $(CXXFLAGS) main.cpp readFromFile.cpp
+main.o : main.cpp Network.h
+	$(CXX) $(CXXFLAGS) main.cpp
 
-test: output_msg catch/catchmain.cpp tests/tests.cpp readFromFile.cpp
-	$(LD) catch/catchmain.cpp tests/tests.cpp readFromFile.cpp $(LDFLAGS) -o test
+intro.o : intro.cpp intro.h
+	$(CXX) $(CXXFLAGS) intro.cpp
 
-clean:
+PNG.o : cs225/PNG.cpp cs225/PNG.h cs225/HSLAPixel.h cs225/lodepng/lodepng.h
+	$(CXX) $(CXXFLAGS) cs225/PNG.cpp
+
+HSLAPixel.o : cs225/HSLAPixel.cpp cs225/HSLAPixel.h
+	$(CXX) $(CXXFLAGS) cs225/HSLAPixel.cpp
+
+lodepng.o : cs225/lodepng/lodepng.cpp cs225/lodepng/lodepng.h
+	$(CXX) $(CXXFLAGS) cs225/lodepng/lodepng.cpp
+
+# Be sure to add output_msg as dependency target for your `intro` binary
+
+test: output_msg tests.o PNG.o HSLAPixel.o lodepng.o intro.o
+	$(LD) tests.o PNG.o HSLAPixel.o lodepng.o intro.o $(LDFLAGS) -o test
+
+tests.o: tests/tests.cpp tests/catch.hpp cs225/PNG.h cs225/HSLAPixel.h
+	$(CXX) $(CXXFLAGS) tests/tests.cpp
+
+clean :
 	-rm -f *.o $(EXENAME) test
