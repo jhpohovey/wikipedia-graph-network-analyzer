@@ -47,7 +47,7 @@ NetworkBuilder::NetworkBuilder(const std::string & filename) : g_(true, false) {
  * @param filename 
  * @return Graph for traversal, other algorithms
  */
-Graph NetworkBuilder::constructGraph(const std::string & filename) {
+Graph& NetworkBuilder::constructGraph() {
     if (data_.empty()) {
         std::cout << "Data structure was not correctly populated" << std::endl;
         g_.insertVertex("N O P E");
@@ -91,4 +91,8 @@ void NetworkBuilder::buildGraphSection(std::vector<Vertex> vertexList) {
         Vertex v1 = vertexList.at(0);
          g_.insertVertex(v1);
     }
+}
+
+const Graph& NetworkBuilder::getGraph() {
+    return g_;
 }
