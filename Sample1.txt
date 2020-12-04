@@ -1,0 +1,6 @@
+14th_century;15th_century;16th_century;Pacific_Ocean;Atlantic_Ocean;Accra;Africa;Atlantic_slave_trade;African_slave_trade
+14th_century;Europe;Africa;Atlantic_slave_trade;African_slave_trade
+14th_century;Niger;Nigeria;British_Empire;Slavery;Africa;Atlantic_slave_trade;African_slave_trade
+14th_century;Renaissance;Ancient_Greece;Greece
+14th_century;Italy;Roman_Catholic_Church;HIV;Ronald_Reagan;President_of_the_United_States;John_F._Kennedy
+14th_century;Europe;North_America;United_States;President_of_the_United_States;John_F._Kennedy
