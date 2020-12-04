@@ -194,10 +194,12 @@ int Graph::getEdgeWeight(Vertex source, Vertex destination) const
 
 void Graph::insertVertex(Vertex v)
 {
-    // will overwrite if old stuff was there
-    removeVertex(v);
-    // make it empty again
-    adjacency_list[v] = unordered_map<Vertex, Edge>();
+    if (!vertexExists(v)) {
+        // make it empty again
+        adjacency_list[v] = unordered_map<Vertex, Edge>();
+    }
+    
+    
 }
 
 
