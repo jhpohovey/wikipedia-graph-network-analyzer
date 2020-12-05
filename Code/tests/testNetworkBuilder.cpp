@@ -57,15 +57,15 @@ TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct vertices", "[part=net
 
     const Graph& G = nb.getGraph();
 
-    REQUIRE(G.vertexExists("14th_century"));
-    REQUIRE (G.vertexExists("15th_century"));
-    REQUIRE (G.vertexExists("16th_century"));
-    REQUIRE (G.vertexExists("Pacific_Ocean"));
-    REQUIRE (G.vertexExists("Atlantic_Ocean"));
-    REQUIRE (G.vertexExists("Accra"));
-    REQUIRE (G.vertexExists("Africa"));
-    REQUIRE (G.vertexExists("Atlantic_slave_trade"));
-    REQUIRE (G.vertexExists("African_slave_trade"));
+    REQUIRE(G.vertexExists("14th_century") == true);
+    REQUIRE (G.vertexExists("15th_century") == true);
+    REQUIRE (G.vertexExists("16th_century") == true);
+    REQUIRE (G.vertexExists("Pacific_Ocean") == true);
+    REQUIRE (G.vertexExists("Atlantic_Ocean") == true);
+    REQUIRE (G.vertexExists("Accra") == true);
+    REQUIRE (G.vertexExists("Africa") == true);
+    REQUIRE (G.vertexExists("Atlantic_slave_trade") == true);
+    REQUIRE (G.vertexExists("African_slave_trade") == true);
 }
 
 TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct edges", "[part=network]") {
@@ -74,11 +74,11 @@ TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct edges", "[part=networ
 
     const Graph& G = nb.getGraph();
 
-    REQUIRE(G.edgeExists("14th_century","15th_century"));
-    REQUIRE(G.edgeExists("16th_century","15th_century"));
-    REQUIRE(G.edgeExists("Pacific_Ocean","Atlantic_Ocean"));
-    REQUIRE(!G.edgeExists("Pacific_Ocean","Atlantic_slave_trade"));
-    REQUIRE(G.edgeExists("Atlantic_slave_trade","African_slave_trade"));
+    REQUIRE(G.edgeExists("14th_century","15th_century") == true);
+    REQUIRE(G.edgeExists("16th_century","15th_century") == true);
+    REQUIRE(G.edgeExists("Pacific_Ocean","Atlantic_Ocean") == true);
+    REQUIRE(G.edgeExists("Pacific_Ocean","Atlantic_slave_trade") == false);
+    REQUIRE(G.edgeExists("Atlantic_slave_trade","African_slave_trade") == true);
 }
 
 
