@@ -7,9 +7,10 @@
 #include <algorithm>
 #include "../file_bot.hpp"
 #include "../Network.h"
+#include "../random.h"
 
 TEST_CASE("Testing a single line read", "[part=network]") {
-    std::string filename = "SingleLine.txt";
+    std::string filename = file_to_string("SingleLine.txt");
     std::vector<std::vector<std::string>> ansVect;
     
     std::vector<std::string> ansLine = {"14th_century", "15th_century", "16th_century", "Pacific_Ocean", "Atlantic_Ocean", "Accra", "Africa", "Atlantic_slave_trade", "African_slave_trade"};

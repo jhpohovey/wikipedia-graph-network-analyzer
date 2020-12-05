@@ -9,7 +9,7 @@ NetworkBuilder::NetworkBuilder(const std::string & filename) : g_(true, false) {
     data_ = file_to_struct(filename);
 }
 
-//createSingleLineVertexList essentially replaced by "file_to_struct" in file_bot.hpp
+//createSingleLineVertexList essentially replaced by "file_to_struct" in file_bot.hpps
 
 /*std::vector<Vertex> NetworkBuilder::createSingleLineVertexList(const std::string & filename) {
     std::string line = readIn(filename);
