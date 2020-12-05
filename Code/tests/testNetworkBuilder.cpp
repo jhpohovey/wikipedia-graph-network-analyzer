@@ -10,12 +10,11 @@
 #include "../random.h"
 
 TEST_CASE("Testing a single line read", "[part=network]") {
-    std::string filename = file_to_string("SingleLine.txt");
+    std::string filename = "tests/SingleLine.txt";
     std::vector<std::vector<std::string>> ansVect;
     
     std::vector<std::string> ansLine = {"14th_century", "15th_century", "16th_century", "Pacific_Ocean", "Atlantic_Ocean", "Accra", "Africa", "Atlantic_slave_trade", "African_slave_trade"};
     ansVect.push_back(ansLine);
-
     std::vector<std::vector<std::string>> out = file_to_struct(filename);
 
     REQUIRE(ansVect[0].size() == out[0].size());
@@ -25,7 +24,7 @@ TEST_CASE("Testing a single line read", "[part=network]") {
 }
 
 TEST_CASE("Testing full read from a file", "[part=network]") {
-    std::string filename = "Sample1.txt";
+    std::string filename = "tests/Sample1.txt";
     std::vector<std::vector<std::string>> ansVect;
     
     std::vector<std::string> ansLine = {"14th_century", "15th_century", "16th_century", "Pacific_Ocean", "Atlantic_Ocean", "Accra", "Africa", "Atlantic_slave_trade", "African_slave_trade"};
@@ -53,7 +52,7 @@ TEST_CASE("Testing full read from a file", "[part=network]") {
 }
 
 TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct vertices", "[part=network]") {
-    NetworkBuilder nb ("SingleLine.txt");
+    NetworkBuilder nb ("tests/SingleLine.txt");
     nb.constructGraph();
 
     const Graph& G = nb.getGraph();
@@ -70,14 +69,14 @@ TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct vertices", "[part=net
 }
 
 TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct edges", "[part=network]") {
-    NetworkBuilder nb ("SingleLine.txt");
+    NetworkBuilder nb ("tests/SingleLine.txt");
     nb.constructGraph();
 
     const Graph& G = nb.getGraph();
 
     REQUIRE(G.edgeExists("14th_century","15th_century"));
     REQUIRE(G.edgeExists("16th_century","15th_century"));
-    REQUIRE(G.edgeExists("Pacific_Ocean","Pacific_Ocean"));
+    REQUIRE(G.edgeExists("Pacific_Ocean","Atlantic_Ocean"));
     REQUIRE(!G.edgeExists("Pacific_Ocean","Atlantic_slave_trade"));
     REQUIRE(G.edgeExists("Atlantic_slave_trade","African_slave_trade"));
 }
