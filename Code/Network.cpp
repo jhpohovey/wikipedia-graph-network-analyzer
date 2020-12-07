@@ -96,11 +96,10 @@ void NetworkBuilder::buildGraphSection(std::vector<Vertex> vertexList) {
 std::map<Vertex, Vertex> NetworkBuilder::get_span(Vertex landmark){
     
     std::queue<Vertex> q;
-    Graph temp = g_;
 
     std::map<Vertex, bool> visited;
     std::map<Vertex, Vertex> predecessor;
-    for(Vertex u : temp.getVertices()){
+    for(Vertex u : g_.getVertices()){
         visited[u] = false;
         predecessor[u] = "0";
     }
@@ -113,7 +112,7 @@ std::map<Vertex, Vertex> NetworkBuilder::get_span(Vertex landmark){
     while(!q.empty()){
         Vertex w = q.front();
         q.pop();
-        for(Vertex y : temp.getAdjacent(w)){
+        for(Vertex y : g_.getAdjacent(w)){
             if (visited[y] == false){
                 //std::cout << y << " has not been visited yet" << std::endl;
                 visited[y] = true;
@@ -148,9 +147,6 @@ std::vector<Vertex> NetworkBuilder::store_path(std::map<Vertex, Vertex> & p, Ver
         curr = p[curr];
     }
     
-    //std::cout << "now we here" << std::endl;
-    //std::cout << reverse[1] << std::endl;
-    //std::cout << reverse[0] << std::endl;
     for (int i = reverse.size() - 1; i >= 0; i--){
         std::cout << reverse[i] << std::endl;
     }

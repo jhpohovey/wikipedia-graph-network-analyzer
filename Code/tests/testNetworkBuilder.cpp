@@ -133,6 +133,7 @@ TEST_CASE("Scanning(landmarktest.txt) produces correct predecessors/", "[part=ne
     //}
 }
 
+/*
 TEST_CASE("Scanning(landmarktest.txt) produces correct predecessors/", "[part=network]") {
     NetworkBuilder nb ("tests/landmarktest.txt");
     nb.constructGraph();
@@ -143,6 +144,7 @@ TEST_CASE("Scanning(landmarktest.txt) produces correct predecessors/", "[part=ne
     std::vector<Vertex> path = nb.store_path(temp, "A", "E", "F");
     
 }
+*/
 
 
 
