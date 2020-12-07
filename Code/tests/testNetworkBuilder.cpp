@@ -5,9 +5,11 @@
 #include "../graph.h"
 #include <vector>
 #include <algorithm>
+#include <map>
 #include "../file_bot.hpp"
 #include "../Network.h"
 #include "../random.h"
+#include "../landmark.h"
 
 TEST_CASE("Testing a single line read", "[part=network]") {
     std::string filename = "tests/SingleLine.txt";
@@ -68,7 +70,7 @@ TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct vertices", "[part=net
     REQUIRE (G.vertexExists("African_slave_trade") == true);
 }
 
-TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct edges", "[part=network]") {
+TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct edges/", "[part=network]") {
     NetworkBuilder nb ("tests/SingleLine.txt");
     nb.constructGraph();
 
@@ -79,6 +81,67 @@ TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct edges", "[part=networ
     REQUIRE(G.edgeExists("Pacific_Ocean","Atlantic_Ocean") == true);
     REQUIRE(G.edgeExists("Pacific_Ocean","Atlantic_slave_trade") == false);
     REQUIRE(G.edgeExists("Atlantic_slave_trade","African_slave_trade") == true);
+}
+
+TEST_CASE("NetworkBuilder(landmarktest.txt) produces correct vertices", "[part=network]") {
+    NetworkBuilder nb ("tests/landmarktest.txt");
+    nb.constructGraph();
+
+    const Graph& G = nb.getGraph();
+
+    REQUIRE(G.vertexExists("A") == true);
+    REQUIRE (G.vertexExists("B") == true);
+    REQUIRE (G.vertexExists("C") == true);
+    REQUIRE (G.vertexExists("D") == true);
+    REQUIRE (G.vertexExists("E") == true);
+    REQUIRE (G.vertexExists("F") == true);
+}
+
+TEST_CASE("NetworkBuilder(landmarktest.txt) produces correct edges/", "[part=network]") {
+    NetworkBuilder nb ("tests/landmarktest.txt");
+    nb.constructGraph();
+
+    const Graph& G = nb.getGraph();
+
+    REQUIRE(G.edgeExists("A", "B") == true);
+    REQUIRE(G.edgeExists("B", "D") == true);
+    REQUIRE(G.edgeExists("D", "F") == true);
+    REQUIRE(G.edgeExists("A", "C") == true);
+    REQUIRE(G.edgeExists("C", "E") == true);
+    REQUIRE(G.edgeExists("C", "B") == true);
+    REQUIRE(G.edgeExists("E", "D") == true);
+    REQUIRE(G.edgeExists("A", "F") == false);
+    REQUIRE(G.edgeExists("C", "D") == false);
+}
+
+TEST_CASE("Scanning(landmarktest.txt) produces correct predecessors/", "[part=network]") {
+    NetworkBuilder nb ("tests/landmarktest.txt");
+    nb.constructGraph();
+
+    const Graph& G = nb.getGraph();
+
+    std::map<Vertex, Vertex> temp = nb.get_span("E");
+    //std::cout<< temp["A"] << std::endl;
+    //std::cout<< temp["B"] << std::endl;
+    //std::cout<< temp["C"] << std::endl;
+    //std::cout<< temp["D"] << std::endl;
+    //std::cout<< temp["E"] << std::endl;
+    //std::cout<< temp["F"] << std::endl;
+    std::vector<Vertex> path = nb.store_path(temp, "A", "E", "F");
+    //for (size_t i = 0; i < path.size() - 1; i++){
+    //    std::cout<< path[i] << std::endl;
+    //}
+}
+
+TEST_CASE("Scanning(landmarktest.txt) produces correct predecessors/", "[part=network]") {
+    NetworkBuilder nb ("tests/landmarktest.txt");
+    nb.constructGraph();
+
+    const Graph& G = nb.getGraph();
+
+    std::map<Vertex, Vertex> temp = nb.get_span("E");
+    std::vector<Vertex> path = nb.store_path(temp, "A", "E", "F");
+    
 }
 
 

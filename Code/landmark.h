@@ -1,3 +1,4 @@
+/*
 #pragma once
 #include <string>
 #include "edge.h"
@@ -19,3 +20,4 @@ class Landmark {
         Graph tree_;
 
 };
+*/

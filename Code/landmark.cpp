@@ -1,12 +1,12 @@
-#include "landmark.h"
+/*#include "landmark.h"
 #include <queue>
 #include <map>
 
-Landmark::Landmark() : tree_(true, false) {
+Landmark::Landmark(const Graph & graph) : tree_(true, false) {
     //nothing 
 }
 
-std::map<Vertex, Vertex> Landmark::spanning(const Graph & graph, Vertex v){
+std::map<Vertex, Vertex> Landmark::spanning(Vertex v){
     
     std::queue<Vertex> q;
     tree_ = graph;
@@ -34,3 +34,4 @@ std::map<Vertex, Vertex> Landmark::spanning(const Graph & graph, Vertex v){
 
     return predecessor;
 }
+*/

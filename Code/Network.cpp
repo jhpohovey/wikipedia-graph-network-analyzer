@@ -93,6 +93,71 @@ void NetworkBuilder::buildGraphSection(std::vector<Vertex> vertexList) {
     }
 }
 
+std::map<Vertex, Vertex> NetworkBuilder::get_span(Vertex landmark){
+    
+    std::queue<Vertex> q;
+    Graph temp = g_;
+
+    std::map<Vertex, bool> visited;
+    std::map<Vertex, Vertex> predecessor;
+    for(Vertex u : temp.getVertices()){
+        visited[u] = false;
+        predecessor[u] = "0";
+    }
+
+    visited[landmark] = true;
+    predecessor[landmark] = "starting";
+    //std::cout<< "Okay we are starting at " << v << std::endl;
+    q.push(landmark);
+
+    while(!q.empty()){
+        Vertex w = q.front();
+        q.pop();
+        for(Vertex y : temp.getAdjacent(w)){
+            if (visited[y] == false){
+                //std::cout << y << " has not been visited yet" << std::endl;
+                visited[y] = true;
+                predecessor[y] = w;
+                q.push(y);
+            }
+        }
+    }
+
+    return predecessor;
+}
+
+std::vector<Vertex> NetworkBuilder::store_path(std::map<Vertex, Vertex> & p, Vertex begin, Vertex landmark, Vertex end){
+    if (p[begin] == "0" || p[end] == "0"){
+        std::cout << "There is no path through these points :(" << std::endl;
+    }
+    std::vector<Vertex> path;
+
+    Vertex curr = begin;
+    //std::cout << "This is the current value";
+    while (curr != landmark){
+        std::cout << curr << std::endl;
+        curr = p[curr];
+    }
+    std::cout << landmark << std::endl;
+
+    std::vector<Vertex> reverse;
+    curr = end;
+
+    while (curr != landmark){
+        reverse.push_back(curr);
+        curr = p[curr];
+    }
+    
+    //std::cout << "now we here" << std::endl;
+    //std::cout << reverse[1] << std::endl;
+    //std::cout << reverse[0] << std::endl;
+    for (int i = reverse.size() - 1; i >= 0; i--){
+        std::cout << reverse[i] << std::endl;
+    }
+
+    return path;
+}
+
 const Graph& NetworkBuilder::getGraph() {
     return g_;
 }
