@@ -1,6 +1,6 @@
 #include "dijkstraSSSP.h"
 
-DijkstraSSSP::DijkstraSSSP(const Graph& G, Vertex u) {
+DijkstraSSSP::DijkstraSSSP(const Graph& G, Vertex u) : g(true, false) {
     start = u;
     g = G;
     std::vector<Vertex> vertexList = G.getVertices();
@@ -38,7 +38,7 @@ Graph DijkstraSSSP::findSP(const Graph& G) {
         for (Vertex& v : adjList) {
             T.insertVertex(v);
             T.insertEdge(u, v);
-            T.setEdgeWeight(u, v, G.getEdgeWeight(u, v); // this just reconstructs Graph G
+            T.setEdgeWeight(u, v, G.getEdgeWeight(u, v)); // this just reconstructs Graph G
             //if (!T.vertexExists(v)) { //the optimization does not include this part
 
                 auto lookupU = dist.find(u);

@@ -20,4 +20,4 @@ class DijkstraSSSP {
         std::unordered_map<Vertex, int> dist;
         std::unordered_map<Vertex, Vertex> pred;
 
-}
+};
