@@ -9,37 +9,6 @@ NetworkBuilder::NetworkBuilder(const std::string & filename) : g_(true, false) {
     data_ = file_to_struct(filename);
 }
 
-//createSingleLineVertexList essentially replaced by "file_to_struct" in file_bot.hpps
-
-/*std::vector<Vertex> NetworkBuilder::createSingleLineVertexList(const std::string & filename) {
-    std::string line = readIn(filename);
-    char semicolon = ';';
-    char newLine = '\n';
-
-    vector<Vertex> list;
-    std::string temp = "";
-
-    for (char& c : line) {
-        if (c != semicolon && c != newLine) {
-            temp += c;
-        }
-        else if (c == semicolon || c == newLine){
-            list.push_back(temp);
-            temp.clear();
-        }
-        else {
-            std::cout << "NOPE" << std::endl;
-            abort();
-        }
-    }
-
-    for (size_t i = 0; i < list.size(); ++i) {
-        std::cout << list[i] << " ";
-    }
-    std::cout << std::endl;
-    return list;
-}*/
-
 /**
  * @brief master functoin that uses the data previously read-in in the constructor 
  * and turns that data into a graph structure
@@ -84,6 +53,7 @@ void NetworkBuilder::buildGraphSection(std::vector<Vertex> vertexList) {
         g_.insertVertex(u);
         g_.insertVertex(v);
         g_.insertEdge(u, v);
+        int weight = u.length() <= v.length() ? u.length() : v.length();
         g_.setEdgeWeight(u,v, weight);
         }
     }

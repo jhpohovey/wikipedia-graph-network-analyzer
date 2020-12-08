@@ -25,7 +25,6 @@ class NetworkBuilder {
     private:
         Graph g_;
         Vertex startPoint;
-        const int weight = 1;
         void buildGraphSection(std::vector<Vertex>); //constructGraoh helper functions
 
         //each element in outer vector represents each line of the .txt file
