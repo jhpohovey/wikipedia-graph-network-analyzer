@@ -13,6 +13,10 @@ class DijkstraSSSP {
     public:
         DijkstraSSSP(const Graph& G, Vertex u);
         const Graph& findSP(const Graph& G);
+        
+        int calculateCostToVertex(const Vertex& v) const;
+        bool checkConnectivity(const Vertex& v) const;
+
         std::unordered_map<Vertex, int> getDists() const;
         std::unordered_map<Vertex, Vertex> getPreds() const;
         Vertex getStart() const;

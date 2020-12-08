@@ -83,3 +83,52 @@ std::unordered_map<Vertex, Vertex> DijkstraSSSP::getPreds() const {
 Vertex DijkstraSSSP::getStart() const {
     return start;
 }
+
+int DijkstraSSSP::calculateCostToVertex(const Vertex& v) const {
+    int cost = 0;
+    auto lookup = dist.find(v);
+    if (lookup == dist.end()) {
+        std::cout << "This vertex is not a vertex within the graph." << std::endl;
+        return -1;
+    }
+    else {
+        if (lookup->second == INT_MAX) {
+            std::cout << "This vertex is not connected to the starting vertex" << std::endl;
+            return INT_MAX;
+        }
+        else {
+            return lookup->second;
+        }
+    }
+}
+
+bool DijkstraSSSP::checkConnectivity(const Vertex& v) const{
+    bool costCheck = false;
+    bool vertexReached = true;
+
+    auto lookup1 = dist.find(v);
+    if (lookup1 == dist.end()) {
+        std::cout << "This vertex is not a vertex within the graph." << std::endl;
+        return -1;
+    }
+    else {
+        if (lookup1->second < INT_MAX) {
+            costCheck = true;
+        }
+    }
+
+    //cross check as secondary stage validation of connectivity of vertex
+    auto lookup2 = pred.find(v);
+    if (lookup2 == pred.end()) {
+        std::cout << "This vertex is not a vertex within the graph." << std::endl;
+        return -1;
+    }
+    else {
+        std::cout << lookup2->second << " LOL " << lookup2->first << std::endl;
+        if (lookup2->first != start && lookup2->second == "") {
+            vertexReached = false;
+        }
+    }
+
+    return (vertexReached && costCheck);
+}
