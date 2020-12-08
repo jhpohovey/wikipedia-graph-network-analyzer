@@ -12,11 +12,15 @@
 class DijkstraSSSP {
     public:
         DijkstraSSSP(const Graph& G, Vertex u);
-        Graph findSP(const Graph& G);
+        const Graph& findSP(const Graph& G);
+        std::unordered_map<Vertex, int> getDists() const;
+        std::unordered_map<Vertex, Vertex> getPreds() const;
+        Vertex getStart() const;
     private:
         PriorityQueue Q;
         Vertex start;
         Graph g;
+        Graph T;
         std::unordered_map<Vertex, int> dist;
         std::unordered_map<Vertex, Vertex> pred;
 
