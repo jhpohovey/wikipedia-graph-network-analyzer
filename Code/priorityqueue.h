@@ -24,6 +24,7 @@ class PriorityQueue {
         std::pair<Vertex, int> top();
         size_t size();
         bool empty();
+        bool clear();
     private:
         std::priority_queue<std::pair<Vertex, int>, std::vector<std::pair<Vertex, int>>, Compare> pq;
 };
