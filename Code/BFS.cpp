@@ -9,7 +9,8 @@
 #include "BFS.h"
 #include "graph.h"
 #include "edge.h"
-using namespace std;
+#include <map>
+//using namespace std;
 
 
 
@@ -23,7 +24,9 @@ BFS::Iterator::Iterator(Graph &g, Vertex &start){//done
     current_ = start;
     vector<Vertex> vert = g.getVertices();
     int size = vert.size();
-    beenVisited_.resize(size, false);
+    for(int i = 0; i < size; i++){
+        beenVisited_.insert(std::pair<std::string, bool> ("", false));
+    }
 }
 
 BFS::BFS(const Graph &g) {//done
@@ -32,7 +35,7 @@ BFS::BFS(const Graph &g) {//done
         setEdgeLabel(e.source, e.dest, "UNEXPLORED");
     }
     for(Vertex v : g.getVertices()) {
-        if(beenVisited_.at(v) == "UNEXPLORED") {
+        if(beenVisited_.at(v) == false) {
             BFS(g, v);
         }
     }
@@ -40,17 +43,19 @@ BFS::BFS(const Graph &g) {//done
 
 BFS::BFS(const Graph &g, const Vertex &v) {//done
     std::queue<Vertex> q;
-    beenVisited_[v] = "VISITED";
+    Vertex temp = v;
+    beenVisited_.at(v) = true;
     q.push(v);
-    while(!nodeQueue_.empty()) {
-        v = nodeQueue_.pop();
-        for(Vertex w : g.getAdjacent(v) {
+    while(!q.empty()) {
+        temp = q.front();
+        q.pop();
+        for(Vertex w : g.getAdjacent(temp)) {
             if(!beenVisited_.at(w)) {
-                setEdgeLabel(v, w, "DISCOVERY");
+                setEdgeLabel(temp, w, "DISCOVERY");
                 beenVisited_.at(w) = true;
-                nodeQueue_.add(w);
-            } else if(getEdgeLabel(v, w) == "UNEXPLORED") {
-                setEdgeLabel(v, w, "CROSS");
+                q.push(w);
+            } else if(getEdgeLabel(temp, w) == "UNEXPLORED") {
+                setEdgeLabel(temp, w, "CROSS");
             }
         }
     }
@@ -58,12 +63,19 @@ BFS::BFS(const Graph &g, const Vertex &v) {//done
 }
 
 BFS::Iterator & BFS::Iterator::operator++() {//not done yet
-    if(!BFS->empty()) {
-        //BFS->pop();
-        beenVisited_[] = true; //find out
-        
+    if(!bfs_->empty()) {
+        beenVisited_.at(current_) = true;
+
+        while(!bfs_->empty() && visited(current_) == true){
+        current_ = bfs_->peek();
+        bfs_->pop();
+        }
+
+        if(!visited(current_)) bfs_->add(current_);
+        if(!bfs_->empty()) current_ = bfs_->peek();
         
     }
+    return *this;
 }
 
 Vertex BFS::Iterator::operator*() {//done
@@ -74,7 +86,12 @@ bool BFS::Iterator::operator!=(const BFS::Iterator &other) {//not done yet
     bool thisEmpty = false;
     bool otherEmpty = false;
     if (this == NULL) thisEmpty = true;
-    if (other == NULL) thisEmpty = true;
+    if (other.bfs_ == NULL) thisEmpty = true;
+    if (!thisEmpty) thisEmpty = bfs_->empty(); 
+    if (!otherEmpty) otherEmpty = other.bfs_->empty(); 
+    if (thisEmpty && otherEmpty) return false; 
+    else if ((!thisEmpty)&&(!otherEmpty)) return (bfs_ != other.bfs_); 
+    else return true;
     
 }
                      
@@ -100,11 +117,11 @@ bool BFS::empty() const {//done
 }
 
 
-Iterator BFS::begin() {//done
-    return Graph::Iterator(this, start_);
+BFS::Iterator BFS::begin() {//done
+    return BFS::Iterator(this->g_, start_);
 }
 
 
-Iterator BFS::end() {//done
-    return Graph::Iterator();    
+BFS::Iterator BFS::end() {//done
+    return BFS::Iterator();    
 }
