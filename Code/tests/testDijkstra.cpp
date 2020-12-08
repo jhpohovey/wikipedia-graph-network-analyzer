@@ -114,6 +114,14 @@ TEST_CASE("Predecessor 'array' has correct initial value population (Med)", "[pa
 }   
 
 TEST_CASE("Shortest Paths found on small graph (|V| = 4) Easy", "[part=sssp][part=find]") {
+    /* G visual:
+                        20
+            Apple ------------------ Dragonfruit
+              |                         |   5
+           5  |                         |
+            Banana ------------------ Carrot
+                            5
+    */
     Graph G(true, false);
     G.insertVertex("Apple");
     G.insertVertex("Banana");
@@ -151,9 +159,27 @@ TEST_CASE("Shortest Paths found on small graph (|V| = 4) Easy", "[part=sssp][par
     REQUIRE(T.edgeExists("Carrot", "Dragonfruit") == true);
     REQUIRE(T.edgeExists("Dragonfruit", "Apple") == false);
 
+    //show that Dijkstra returns longer path of 3 edges instead of 1 edge to get from Apple to Dragonfruit, b/c sum of weight of 3 edges is less than the 1 edge
+    REQUIRE(T.getEdgeWeight("Apple", "Banana") + T.getEdgeWeight("Banana", "Carrot") + G.getEdgeWeight("Carrot", "Dragonfruit") <= G.getEdgeWeight("Dragonfruit", "Apple"));
+
+    int cost = djsp.calculateCostToVertex("Dragonfruit");
+    REQUIRE(cost == 15); // A to B = 5, B to C = 5, C to D = 5; 5 + 5 + 5 = 15 < 20
+
 }
 
 TEST_CASE("Shortest Paths found on small graph (|V| = 4) Med", "[part=sssp][part=find]") {
+        /* G visual:
+                        20
+            Apple ------------------ Dragonfruit
+              |   \                     |   
+           5  |        \   10           |
+              |            \            |   15
+              |                 \       |
+              |                     \   |
+            Banana ------------------ Carrot
+                            6
+    */
+
     Graph G(true, false);
     G.insertVertex("Apple");
     G.insertVertex("Banana");
@@ -198,6 +224,19 @@ TEST_CASE("Shortest Paths found on small graph (|V| = 4) Med", "[part=sssp][part
 }
 
 TEST_CASE("Shortest Paths found on small graph (|V| = 4) Hard", "[part=sssp][part=find]") {
+
+    /* G visual:
+                        20
+            Apple ------------------ Dragonfruit
+              |   \                  /   |   
+           5  |    15  \        /        |
+              |           / \            |   25
+              |       /          \       |
+              |   / 7                \   |
+            Banana ------------------ Carrot
+                            6
+    */
+
     Graph G(true, false);
     G.insertVertex("Apple");
     G.insertVertex("Banana");
@@ -283,10 +322,12 @@ TEST_CASE("Shortest paths found for med graph from file (Sample1.txt)", "[part=s
     nb.constructGraph();
 
     const Graph& G = nb.getGraph();
-    Vertex start = "Atlantic_slave_trade";
+    
+    Vertex start = "14th_century";
 
     DijkstraSSSP djsp(G, start);
     const Graph& T = djsp.findSP(G);
+    T.print();
 
     std::vector<Vertex> GvertexList = G.getVertices();
     std::vector<Vertex> TvertexList = T.getVertices();
@@ -297,5 +338,197 @@ TEST_CASE("Shortest paths found for med graph from file (Sample1.txt)", "[part=s
         REQUIRE(GvertexList[i] == TvertexList[i]);
     }
 
-    //need to test edges here still
+    std::vector<Edge> TedgeList = T.getEdges();
+    std::vector<Edge> GedgeList = G.getEdges();
+    REQUIRE(GedgeList.size() == TedgeList.size() + 3);
+    REQUIRE(T.edgeExists("Slavery", "British_Empire") == false);
+    REQUIRE(T.edgeExists("United_States", "President_of_the_United_States") == false);
+    REQUIRE(T.edgeExists("Pacific_Ocean", "16th_century") == false);
+}
+
+TEST_CASE ("Cost to travel from the startving vertex to a vertex B is correct (|V| = 4) Easy", "[part=sssp][part=cost]") {
+
+    /* G visual:
+                        20
+            Apple ------------------ Dragonfruit
+              |                         |   5
+           5  |                         |
+            Banana ------------------ Carrot
+                            5
+    */
+
+    Graph G(true, false);
+    G.insertVertex("Apple");
+    G.insertVertex("Banana");
+    G.insertVertex("Carrot");
+    G.insertVertex("Dragonfruit");
+
+    G.insertEdge("Apple", "Banana");
+    G.setEdgeWeight("Apple", "Banana", 5);
+
+    G.insertEdge("Banana", "Carrot");
+    G.setEdgeWeight("Banana", "Carrot", 5);
+
+    G.insertEdge("Carrot", "Dragonfruit");
+    G.setEdgeWeight("Carrot", "Dragonfruit", 5);
+
+    G.insertEdge("Apple", "Dragonfruit");
+    G.setEdgeWeight("Apple", "Dragonfruit", 20);
+
+    DijkstraSSSP djsp(G, "Apple");
+    Graph T = djsp.findSP(G);
+    
+    Vertex destination = "Banana";
+    int cost = djsp.calculateCostToVertex(destination);
+    REQUIRE(cost == 5);
+
+    destination = "Carrot";
+    cost = djsp.calculateCostToVertex(destination);
+    REQUIRE(cost == 10);
+
+    destination = "Dragonfruit";
+    cost = djsp.calculateCostToVertex(destination);
+    REQUIRE(cost < 20);
+    REQUIRE(cost == 15);
+}
+
+TEST_CASE("Cost to travel from the startving vertex to a vertex B is correct (|V| = 4) Med", "[part=sssp][part=cost]") {
+    /* G visual:
+                        20
+            Apple ------------------ Dragonfruit
+              |   \                     |   
+           5  |        \   10           |
+              |            \            |   15
+              |                 \       |
+              |                     \   |
+            Banana ------------------ Carrot
+                            6
+    */
+    Graph G(true, false);
+    G.insertVertex("Apple");
+    G.insertVertex("Banana");
+    G.insertVertex("Carrot");
+    G.insertVertex("Dragonfruit");
+
+    G.insertEdge("Apple", "Banana");
+    G.setEdgeWeight("Apple", "Banana", 5);
+
+    G.insertEdge("Apple", "Carrot");
+    G.setEdgeWeight("Apple", "Carrot", 10);
+
+    G.insertEdge("Banana", "Carrot");
+    G.setEdgeWeight("Banana", "Carrot", 6);
+
+    G.insertEdge("Carrot", "Dragonfruit");
+    G.setEdgeWeight("Carrot", "Dragonfruit", 15);
+
+    G.insertEdge("Apple", "Dragonfruit");
+    G.setEdgeWeight("Apple", "Dragonfruit", 20);
+
+    DijkstraSSSP djsp(G, "Apple");
+    Graph T = djsp.findSP(G);
+
+    Vertex destination = "Banana";
+    int cost = djsp.calculateCostToVertex(destination);
+    REQUIRE(cost == 5);
+
+    destination = "Carrot";
+    cost = djsp.calculateCostToVertex(destination);
+    REQUIRE(cost < 11);
+    REQUIRE(cost == 10);
+
+    destination = "Dragonfruit";
+    cost = djsp.calculateCostToVertex(destination);
+    REQUIRE(cost < (5 + 6 + 15));
+    REQUIRE(cost < (10 + 15));
+    REQUIRE(cost == 20);
+}
+
+TEST_CASE("Cost to travel from the startving vertex to a vertex B is correct (|V| = 4) Hard", "[part=sssp][part=cost]") {
+    /* G visual:
+                        20
+            Apple ------------------ Dragonfruit
+              |   \                  /   |   
+           5  |    15  \        /        |
+              |           / \            |   25
+              |       /          \       |
+              |   / 7                \   |
+            Banana ------------------ Carrot
+                            6
+    */
+
+    Graph G(true, false);
+    G.insertVertex("Apple");
+    G.insertVertex("Banana");
+    G.insertVertex("Carrot");
+    G.insertVertex("Dragonfruit");
+
+    G.insertEdge("Apple", "Banana");
+    G.setEdgeWeight("Apple", "Banana", 5);
+
+    G.insertEdge("Apple", "Carrot");
+    G.setEdgeWeight("Apple", "Carrot", 15);
+
+    G.insertEdge("Banana", "Carrot");
+    G.setEdgeWeight("Banana", "Carrot", 6);
+
+    G.insertEdge("Banana", "Dragonfruit");
+    G.setEdgeWeight("Banana", "Dragonfruit", 7);
+
+    G.insertEdge("Carrot", "Dragonfruit");
+    G.setEdgeWeight("Carrot", "Dragonfruit", 25);
+
+    G.insertEdge("Apple", "Dragonfruit");
+    G.setEdgeWeight("Apple", "Dragonfruit", 20);
+
+    DijkstraSSSP djsp(G, "Apple");
+    const Graph& T = djsp.findSP(G);
+
+    Vertex destination = "Banana";
+    int cost = djsp.calculateCostToVertex(destination);
+    REQUIRE(cost == 5);
+
+    destination = "Carrot";
+    cost = djsp.calculateCostToVertex(destination);
+    REQUIRE(cost < (20 + 25));
+    REQUIRE(cost < 15);
+    REQUIRE(cost == (5 + 6));
+
+    destination = "Dragonfruit";
+    cost = djsp.calculateCostToVertex(destination);
+    REQUIRE(cost < 20);
+    REQUIRE(cost < (5 + 6 + 25));
+    REQUIRE(cost == (5 + 7));
+    
+}
+
+TEST_CASE("Checks that on a graph with disconnected subgraphs, algorithm can determine which vertices are disconnected", "[part=sssp][part=cost]") {
+    Graph G(true, false);
+    G.insertVertex("Apple");
+    G.insertVertex("Banana");
+    G.insertVertex("Carrot");
+    G.insertVertex("Dragonfruit");
+    G.insertVertex("Not_Connected_Vertex");
+
+    G.insertEdge("Apple", "Banana");
+    G.setEdgeWeight("Apple", "Banana", 5);
+
+    G.insertEdge("Banana", "Carrot");
+    G.setEdgeWeight("Banana", "Carrot", 5);
+
+    G.insertEdge("Carrot", "Dragonfruit");
+    G.setEdgeWeight("Carrot", "Dragonfruit", 5);
+
+    G.insertEdge("Apple", "Dragonfruit");
+    G.setEdgeWeight("Apple", "Dragonfruit", 20);
+
+    DijkstraSSSP djsp(G, "Apple");
+    Graph T = djsp.findSP(G);
+    int cost = djsp.calculateCostToVertex("Not_Connected_Vertex");
+    REQUIRE(cost == INT_MAX); //since cost is infinity, this means that the destination vertex is not connected to the starting vertex, since the value never got udpated.
+    bool connected = djsp.checkConnectivity("Not_Connected_Vertex");
+    REQUIRE(connected == false); //second way of showing that we are able to determine connectivity
+
+    connected = djsp.checkConnectivity("Banana");
+    REQUIRE(connected == true);
 }
