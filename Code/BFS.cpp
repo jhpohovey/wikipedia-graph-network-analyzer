@@ -7,8 +7,8 @@
 #include <vector>
 
 #include "BFS.h"
-#include "Graph.h"
-
+#include "graph.h"
+#include "edge.h"
 using namespace std;
 
 
@@ -21,13 +21,13 @@ BFS::Iterator::Iterator(Graph &g, Vertex &start){//done
     g_ = g;
     start_ = start;
     current_ = start;
-    vector<Vertex> vert = getVertices();
+    vector<Vertex> vert = g.getVertices();
     int size = vert.size();
     beenVisited_.resize(size, false);
 }
 
 BFS::BFS(const Graph &g) {//done
-    Vertex v = getStartingVertex();
+    Vertex v = g.getStartingVertex();
     for(Edge e : g.getEdges()) {
         setEdgeLabel(e.source, e.dest, "UNEXPLORED");
     }
@@ -39,7 +39,7 @@ BFS::BFS(const Graph &g) {//done
 }
 
 BFS::BFS(const Graph &g, const Vertex &v) {//done
-    std::queue q;
+    std::queue<Vertex> q;
     beenVisited_[v] = "VISITED";
     q.push(v);
     while(!nodeQueue_.empty()) {

@@ -4,6 +4,9 @@
 #include <cmath>
 #include <list>
 #include <queue>
+#include "graph.h"
+#include "edge.h"
+#include <map>
 
 class BFS {
     public: 
