@@ -27,12 +27,17 @@ DijkstraSSSP::DijkstraSSSP(const Graph& G, Vertex u) : g(true, false), T(true, f
 
 
 const Graph& DijkstraSSSP::findSP(const Graph& G) {
+    bool flag = false;
     while (!Q.empty()) {
         std::pair<Vertex, int> duo = Q.pop();
         Vertex u = duo.first;
         T.insertVertex(u);
 
         std::vector<Vertex> adjList = G.getAdjacent(u);
+        if (adjList.empty()) { //ensure that the starting vertex is connected to others, or don't need to run alg
+            flag = true;
+            break;
+        }
         for (Vertex& v : adjList) {
             T.insertVertex(v);
             //if (!T.vertexExists(v)) { //the optimization from lecture does not include this part
@@ -58,9 +63,13 @@ const Graph& DijkstraSSSP::findSP(const Graph& G) {
         }
 
     }
+    if (flag) {
+        pred[start] = "No results possible";
+        return T;
+    }
 
     for (auto it = pred.begin(); it != pred.end(); ++it) {
-        //std::cout << it->first << ", " << it->second << std::endl;
+        std::cout << it->first << ", " << it->second << std::endl;
         if (it->second != "") {
             T.insertEdge(it->second, it->first);
             int weight = G.getEdgeWeight(it->second, it->first);
