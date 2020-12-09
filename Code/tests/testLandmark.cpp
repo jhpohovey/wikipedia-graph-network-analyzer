@@ -11,21 +11,40 @@
 #include "../random.h"
 #include "../landmark.h"
 
-TEST_CASE("Scanning(landmarktest.txt) produces correct predecessors/", "[part=landmark]") {
-    NetworkBuilder nb ("tests/landmarktest.txt");
+TEST_CASE("Scanning SingleLine.txt forwards creates the right predecessors/", "[part=landmark]") {
+    NetworkBuilder nb ("tests/SingleLine.txt");
     nb.constructGraph();
 
     const Graph& g = nb.getGraph();
 
-    Landmark span(g, "E");
-    //std::cout<< temp["A"] << std::endl;
-    //std::cout<< temp["B"] << std::endl;
-    //std::cout<< temp["C"] << std::endl;
-    //std::cout<< temp["D"] << std::endl;
-    //std::cout<< temp["E"] << std::endl;
-    //std::cout<< temp["F"] << std::endl;
-    span.store_path("A", "E", "F");
-    //for (size_t i = 0; i < path.size() - 1; i++){
-    //    std::cout<< path[i] << std::endl;
-    //}
+    Landmark span(g, "14th_century");
+    std::map<Vertex, Vertex> result = span.getPred();
+
+    std::vector<Vertex> ansLine = {"14th_century", "15th_century", "16th_century", "Pacific_Ocean", "Atlantic_Ocean", "Accra", "Africa", "Atlantic_slave_trade", "African_slave_trade"};
+    for (size_t i = 0; i < ansLine.size(); i ++){
+        if (i == 0){
+            REQUIRE(result.at(ansLine[i]) == "Starting");
+            continue;
+        }
+        REQUIRE(result.at(ansLine[i]) == ansLine[i-1]);
+    }
+}
+
+TEST_CASE("Scanning SingleLine.txt backwards creates the right predecessors/", "[part=landmark]") {
+    NetworkBuilder nb ("tests/SingleLine.txt");
+    nb.constructGraph();
+
+    const Graph& g = nb.getGraph();
+
+    Landmark span(g, "African_slave_trade");
+    std::map<Vertex, Vertex> result = span.getPred();
+
+    std::vector<Vertex> ansLine = {"14th_century", "15th_century", "16th_century", "Pacific_Ocean", "Atlantic_Ocean", "Accra", "Africa", "Atlantic_slave_trade", "African_slave_trade"};
+    for (size_t i = 0; i < ansLine.size(); i ++){
+        if (i == ansLine.size()-1){
+            REQUIRE(result.at(ansLine[i]) == "Starting");
+            continue;
+        }
+        REQUIRE(result.at(ansLine[i]) == ansLine[i+1]);
+    }
 }
