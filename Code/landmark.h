@@ -16,12 +16,16 @@ class Landmark {
         Landmark(const Graph & graph, Vertex landmark);
         void get_span(const Graph & graph, Vertex landmark);
         void store_path(Vertex begin, Vertex landmark, Vertex end);
+        std::map<Vertex, Vertex> getPred();
+        std::vector<Vertex> getPath();
+
+
         //void printPath; 
 
 
     private:
         //Graph tree_;
         std::map<Vertex, Vertex> pred;
-        //std::vector<Vertex> path_;
+        std::vector<Vertex> path_;
 
 };

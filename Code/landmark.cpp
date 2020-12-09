@@ -35,7 +35,6 @@ void Landmark::get_span(const Graph & graph, Vertex landmark){
 }
 
 void Landmark::store_path(Vertex begin, Vertex landmark, Vertex end){
-    std::cout << "got here" << std::endl;
 
     std::vector<Vertex> path;
     if (pred[begin] == "0" || pred[end] == "0"){
@@ -43,19 +42,19 @@ void Landmark::store_path(Vertex begin, Vertex landmark, Vertex end){
         return;
     }
 
-    std::cout << begin << ", " << landmark << ", " << "and " << end << " are connected." << std::endl;
-    std::cout << "Thank god1" << std::endl;
+    //std::cout << begin << ", " << landmark << ", " << "and " << end << " are connected." << std::endl;
+    //std::cout << "Thank god1" << std::endl;
     Vertex curr = begin;
-    std::cout << "This is the current value: " << curr << std::endl;
-    std::cout << "This is the predecessor: " << pred[curr] << std::endl;
+    //std::cout << "This is the current value: " << curr << std::endl;
+    //std::cout << "This is the predecessor: " << pred[curr] << std::endl;
 
     while (curr != landmark){
-        std::cout << curr;
+        path_.push_back(curr);
+        //std::cout << curr;
         curr = pred[curr];
     }
 
-    std::cout << "Thank god" << std::endl;
-    std::cout << landmark;
+    //std::cout << landmark;
 
     std::vector<Vertex> reverse;
     curr = end;
@@ -66,11 +65,18 @@ void Landmark::store_path(Vertex begin, Vertex landmark, Vertex end){
     }
 
     for (int i = reverse.size() - 1; i >= 0; i--){
-        std::cout << reverse[i];
+        //std::cout << reverse[i];
+        path_.push_back(reverse[i]);
     }
 
-    std::cout << "donzo" << std::endl;
     return;
 }
 
+std::map<Vertex, Vertex> Landmark::getPred(){
+    return pred;
+}
+
+std::vector<Vertex> Landmark::getPath(){
+    return path_;
+}
 

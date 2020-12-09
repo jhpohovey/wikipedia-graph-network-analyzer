@@ -134,37 +134,5 @@ TEST_CASE("NetworkBuilder(landmarktest.txt) produces correct edges/", "[part=net
     REQUIRE(G.edgeExists("C", "D") == false);
 }
 
-TEST_CASE("Scanning(landmarktest.txt) produces correct predecessors/", "[part=landmark]") {
-    NetworkBuilder nb ("tests/landmarktest.txt");
-    nb.constructGraph();
-
-    const Graph& g = nb.getGraph();
-
-    Landmark span(g, "E");
-    //std::cout<< temp["A"] << std::endl;
-    //std::cout<< temp["B"] << std::endl;
-    //std::cout<< temp["C"] << std::endl;
-    //std::cout<< temp["D"] << std::endl;
-    //std::cout<< temp["E"] << std::endl;
-    //std::cout<< temp["F"] << std::endl;
-    span.store_path("A", "E", "F");
-    //for (size_t i = 0; i < path.size() - 1; i++){
-    //    std::cout<< path[i] << std::endl;
-    //}
-}
-
-/*
-TEST_CASE("Scanning(landmarktest.txt) produces correct predecessors/", "[part=network]") {
-    NetworkBuilder nb ("tests/landmarktest.txt");
-    nb.constructGraph();
-
-    const Graph& G = nb.getGraph();
-
-    std::map<Vertex, Vertex> temp = nb.get_span("E");
-    std::vector<Vertex> path = nb.store_path(temp, "A", "E", "F");
-    
-}
-*/
-
 
 
