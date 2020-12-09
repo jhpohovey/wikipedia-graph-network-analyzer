@@ -19,8 +19,8 @@ class NetworkBuilder {
         //std::vector<Vertex> createSingleLineVertexList(const std::string & filename);
         Graph& constructGraph();
         const Graph& getGraph();
-        std::map<Vertex, Vertex> get_span(Vertex landmark);
-        std::vector<Vertex> store_path(std::map<Vertex, Vertex> & predecessor, Vertex begin, Vertex landmark, Vertex end);
+        //std::map<Vertex, Vertex> get_span(Vertex landmark);
+        //std::vector<Vertex> store_path(std::map<Vertex, Vertex> & predecessor, Vertex begin, Vertex landmark, Vertex end);
 
     private:
         Graph g_;

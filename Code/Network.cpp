@@ -63,7 +63,7 @@ void NetworkBuilder::buildGraphSection(std::vector<Vertex> vertexList) {
     }
 }
 
-std::map<Vertex, Vertex> NetworkBuilder::get_span(Vertex landmark){
+/*std::map<Vertex, Vertex> NetworkBuilder::get_span(Vertex landmark){
     
     std::queue<Vertex> q;
 
@@ -96,11 +96,14 @@ std::map<Vertex, Vertex> NetworkBuilder::get_span(Vertex landmark){
 }
 
 std::vector<Vertex> NetworkBuilder::store_path(std::map<Vertex, Vertex> & p, Vertex begin, Vertex landmark, Vertex end){
+    std::vector<Vertex> path;
     if (p[begin] == "0" || p[end] == "0"){
         std::cout << "There is no path through these points :(" << std::endl;
+        return path;
     }
-    std::vector<Vertex> path;
 
+    //std::cout << begin << ", " << landmark << ", " << "and " << end << "are connected." << std::endl;
+    //std::cout
     Vertex curr = begin;
     //std::cout << "This is the current value";
     while (curr != landmark){
@@ -123,7 +126,7 @@ std::vector<Vertex> NetworkBuilder::store_path(std::map<Vertex, Vertex> & p, Ver
     }
 
     return path;
-}
+}*/
 
 const Graph& NetworkBuilder::getGraph() {
     return g_;
