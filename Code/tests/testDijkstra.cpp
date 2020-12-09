@@ -327,7 +327,6 @@ TEST_CASE("Shortest paths found for med graph from file (Sample1.txt)", "[part=s
 
     DijkstraSSSP djsp(G, start);
     const Graph& T = djsp.findSP(G);
-    T.print();
 
     std::vector<Vertex> GvertexList = G.getVertices();
     std::vector<Vertex> TvertexList = T.getVertices();

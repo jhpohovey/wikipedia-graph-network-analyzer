@@ -69,7 +69,7 @@ const Graph& DijkstraSSSP::findSP(const Graph& G) {
     }
 
     for (auto it = pred.begin(); it != pred.end(); ++it) {
-        std::cout << it->first << ", " << it->second << std::endl;
+        //std::cout << it->first << ", " << it->second << std::endl;
         if (it->second != "") {
             T.insertEdge(it->second, it->first);
             int weight = G.getEdgeWeight(it->second, it->first);
@@ -133,7 +133,7 @@ bool DijkstraSSSP::checkConnectivity(const Vertex& v) const{
         return -1;
     }
     else {
-        std::cout << lookup2->second << " LOL " << lookup2->first << std::endl;
+        //std::cout << lookup2->second << " LOL " << lookup2->first << std::endl;
         if (lookup2->first != start && lookup2->second == "") {
             vertexReached = false;
         }
