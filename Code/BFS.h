@@ -27,8 +27,9 @@ class BFS {
                 
         };
         */
-        BFS(const Graph &g);
-        BFS(const Graph &g, const Vertex &v);
+       BFS();
+        Graph BFScomplete(const Graph &g);
+        void BFShelper(const Graph &g, const Vertex &v);
         Graph getGraphBFS(Graph );
         void add(const Vertex &vertex);
         Vertex pop();
