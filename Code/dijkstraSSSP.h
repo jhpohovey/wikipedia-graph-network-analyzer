@@ -20,6 +20,7 @@ class DijkstraSSSP {
         std::unordered_map<Vertex, int> getDists() const;
         std::unordered_map<Vertex, Vertex> getPreds() const;
         Vertex getStart() const;
+        std::vector<Vertex> pathToDestination (Vertex dest);
     private:
         PriorityQueue Q;
         Vertex start;
