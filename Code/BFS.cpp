@@ -13,9 +13,14 @@
 using namespace std;
 
 
-BFS::BFS(const Graph &g) : g_(true, false) {//done
+BFS::BFS(const Graph &g) : g_(true,false) {//done
     Vertex v = g.getStartingVertex();
+    for(Vertex v : g.getVertices()){
+        g_.insertVertex(v);
+        beenVisited_.insert(std::pair<Vertex, bool>(v,false));
+    }
     for(Edge e : g.getEdges()) {
+        g_.insertEdge(e.source,e.dest);
         g_.setEdgeLabel(e.source, e.dest, "UNEXPLORED");
     }
     for(Vertex v : g.getVertices()) {
@@ -25,26 +30,34 @@ BFS::BFS(const Graph &g) : g_(true, false) {//done
     }
 }
 
-BFS::BFS(const Graph &g, const Vertex &v) : g_(true, false) {//done
+BFS::BFS(const Graph &g,const Vertex &v) : g_(true,false) {//done
     std::queue<Vertex> q;
     Vertex temp = v;
-    beenVisited_.at(v) = true;
+    std::map<Vertex,bool>::iterator it = beenVisited_.find(v);
+    it->second = true;
     q.push(v);
     while(!q.empty()) {
         temp = q.front();
         q.pop();
         for(Vertex w : g.getAdjacent(temp)) {
-            if(!beenVisited_.at(w)) {
+            std::map<Vertex,bool>::iterator it = beenVisited_.find(w);
+            if(it->second == false) {
                 g_.setEdgeLabel(temp, w, "DISCOVERY");
-                beenVisited_.at(w) = true;
+                it->second = true;
                 q.push(w);
-            } else if(g_.getEdgeLabel(temp, w) == "UNEXPLORED") {
+            } else if(g.getEdgeLabel(temp, w) == "UNEXPLORED") {
                 g_.setEdgeLabel(temp, w, "CROSS");
             }
         }
     }
-
 }
+
+Graph BFS::getGraphBFS(Graph g) {
+    BFS temp(g);
+    return g;
+}
+
+
 
 
 /*
