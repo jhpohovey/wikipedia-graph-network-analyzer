@@ -50,7 +50,6 @@ BFS::BFS(const Graph &g,const Vertex &v) : g_(true,false) {//done
             }
         }
     }
-
 }
 
 Graph BFS::getGraphBFS(Graph g) {
