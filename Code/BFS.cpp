@@ -10,24 +10,8 @@
 #include "graph.h"
 #include "edge.h"
 #include <map>
-//using namespace std;
+using namespace std;
 
-
-/*
-BFS::Iterator::Iterator() : g_(true, false){//done
-    current_ = "";
-}
-
-BFS::Iterator::Iterator(Graph &g, Vertex &start) : g_(true, false) {//done
-    g_ = g;
-    start_ = start;
-    current_ = start;
-    vector<Vertex> vert = g.getVertices();
-    int size = vert.size();
-    for(int i = 0; i < size; i++){
-        beenVisited_.insert(std::pair<std::string, bool> ("", false));
-    }
-}*/
 
 BFS::BFS(const Graph &g) : g_(true, false) {//done
     Vertex v = g.getStartingVertex();
@@ -61,7 +45,24 @@ BFS::BFS(const Graph &g, const Vertex &v) : g_(true, false) {//done
     }
 
 }
+
+
 /*
+BFS::Iterator::Iterator() : g_(true, false){//done
+    current_ = "";
+}
+
+BFS::Iterator::Iterator(Graph &g, Vertex &start) : g_(true, false) {//done
+    g_ = g;
+    start_ = start;
+    current_ = start;
+    vector<Vertex> vert = g.getVertices();
+    int size = vert.size();
+    for(int i = 0; i < size; i++){
+        beenVisited_.insert(std::pair<std::string, bool> ("", false));
+    }
+}
+
 BFS::Iterator & BFS::Iterator::operator++() {//not done yet
     if(!bfs_->empty()) {
         beenVisited_.at(current_) = true;
