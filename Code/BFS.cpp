@@ -13,12 +13,12 @@
 //using namespace std;
 
 
-
-BFS::Iterator::Iterator() {//done
+/*
+BFS::Iterator::Iterator() : g_(true, false){//done
     current_ = "";
 }
 
-BFS::Iterator::Iterator(Graph &g, Vertex &start){//done
+BFS::Iterator::Iterator(Graph &g, Vertex &start) : g_(true, false) {//done
     g_ = g;
     start_ = start;
     current_ = start;
@@ -27,12 +27,12 @@ BFS::Iterator::Iterator(Graph &g, Vertex &start){//done
     for(int i = 0; i < size; i++){
         beenVisited_.insert(std::pair<std::string, bool> ("", false));
     }
-}
+}*/
 
-BFS::BFS(const Graph &g) {//done
+BFS::BFS(const Graph &g) : g_(true, false) {//done
     Vertex v = g.getStartingVertex();
     for(Edge e : g.getEdges()) {
-        setEdgeLabel(e.source, e.dest, "UNEXPLORED");
+        g_.setEdgeLabel(e.source, e.dest, "UNEXPLORED");
     }
     for(Vertex v : g.getVertices()) {
         if(beenVisited_.at(v) == false) {
@@ -41,7 +41,7 @@ BFS::BFS(const Graph &g) {//done
     }
 }
 
-BFS::BFS(const Graph &g, const Vertex &v) {//done
+BFS::BFS(const Graph &g, const Vertex &v) : g_(true, false) {//done
     std::queue<Vertex> q;
     Vertex temp = v;
     beenVisited_.at(v) = true;
@@ -51,17 +51,17 @@ BFS::BFS(const Graph &g, const Vertex &v) {//done
         q.pop();
         for(Vertex w : g.getAdjacent(temp)) {
             if(!beenVisited_.at(w)) {
-                setEdgeLabel(temp, w, "DISCOVERY");
+                g_.setEdgeLabel(temp, w, "DISCOVERY");
                 beenVisited_.at(w) = true;
                 q.push(w);
-            } else if(getEdgeLabel(temp, w) == "UNEXPLORED") {
-                setEdgeLabel(temp, w, "CROSS");
+            } else if(g_.getEdgeLabel(temp, w) == "UNEXPLORED") {
+                g_.setEdgeLabel(temp, w, "CROSS");
             }
         }
     }
 
 }
-
+/*
 BFS::Iterator & BFS::Iterator::operator++() {//not done yet
     if(!bfs_->empty()) {
         beenVisited_.at(current_) = true;
@@ -125,3 +125,4 @@ BFS::Iterator BFS::begin() {//done
 BFS::Iterator BFS::end() {//done
     return BFS::Iterator();    
 }
+*/
