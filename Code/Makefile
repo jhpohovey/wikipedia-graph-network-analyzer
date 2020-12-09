@@ -1,5 +1,5 @@
 # Executable names:
-EXE = lab_ml
+EXE = network
 TEST = test
 
 # Add all object files needed for compiling:
