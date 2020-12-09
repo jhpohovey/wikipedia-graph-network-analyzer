@@ -18,9 +18,7 @@ class Landmark {
         void store_path(Vertex begin, Vertex landmark, Vertex end);
         std::map<Vertex, Vertex> getPred();
         std::vector<Vertex> getPath();
-
-
-        //void printPath; 
+        void printPath(); 
 
 
     private:

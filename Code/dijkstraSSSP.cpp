@@ -141,3 +141,16 @@ bool DijkstraSSSP::checkConnectivity(const Vertex& v) const{
 
     return (vertexReached && costCheck);
 }
+
+std::vector<Vertex> DijkstraSSSP::pathToDestination (Vertex dest) {
+    std::vector<Vertex> path;
+    path.push_back(dest);
+    auto lookup = pred.find(dest);
+    while (lookup->second != "") {
+        lookup = pred.find(lookup->second);
+        path.push_back(lookup->first);
+    }
+
+    reverse(path.begin(), path.end());
+    return path;
+}

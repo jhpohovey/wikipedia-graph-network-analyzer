@@ -55,6 +55,7 @@ void Landmark::store_path(Vertex begin, Vertex landmark, Vertex end){
     }
 
     //std::cout << landmark;
+    path_.push_back(landmark);
 
     std::vector<Vertex> reverse;
     curr = end;
@@ -67,6 +68,20 @@ void Landmark::store_path(Vertex begin, Vertex landmark, Vertex end){
     for (int i = reverse.size() - 1; i >= 0; i--){
         //std::cout << reverse[i];
         path_.push_back(reverse[i]);
+    }
+    std::cout << begin << landmark << end << std::endl;
+    printPath();
+
+    return;
+}
+
+void Landmark::printPath(){
+    if (path_.size() == 0 || path_.size() == 1 || path_.size() == 2){
+        std::cout << "Sorry there is no path between these" << std::endl;
+    }
+
+    for (size_t i = 0; i < path_.size(); i++){
+        std::cout << path_[i];
     }
 
     return;
