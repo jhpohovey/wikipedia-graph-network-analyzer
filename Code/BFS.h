@@ -24,22 +24,25 @@ class BFS {
                 Graph g_;
                 Vertex start_;
                 Vertex current_;
-                BFS *bfs_;
+                
         };
         */
         BFS(const Graph &g);
         BFS(const Graph &g, const Vertex &v);
+        Graph getGraphBFS(Graph );
         void add(const Vertex &vertex);
         Vertex pop();
         Vertex peek() const;
         bool empty() const;
+        Graph g_;
 
 
     private: 
-        Graph g_;
+        
         Vertex start_;
         std::queue<Vertex> nodeQueue_;
-        std::map<Vertex, bool> beenVisited_;   
+        std::map<Vertex, bool> beenVisited_;  
+        
 };
 
 
