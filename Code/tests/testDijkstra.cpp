@@ -532,3 +532,30 @@ TEST_CASE("Checks that on a graph with disconnected subgraphs, algorithm can det
     connected = djsp.checkConnectivity("Banana");
     REQUIRE(connected == true);
 }
+
+TEST_CASE("Check that Dijkstra's algorithm is not run on a disconnected starting vertex", "[part=sssp][part=cost]") {
+    Graph G(true, false);
+    G.insertVertex("Apple");
+    G.insertVertex("Banana");
+    G.insertVertex("Carrot");
+    G.insertVertex("Dragonfruit");
+    G.insertVertex("Not_Connected_Vertex");
+
+    G.insertEdge("Apple", "Banana");
+    G.setEdgeWeight("Apple", "Banana", 5);
+
+    G.insertEdge("Banana", "Carrot");
+    G.setEdgeWeight("Banana", "Carrot", 5);
+
+    G.insertEdge("Carrot", "Dragonfruit");
+    G.setEdgeWeight("Carrot", "Dragonfruit", 5);
+
+    G.insertEdge("Apple", "Dragonfruit");
+    G.setEdgeWeight("Apple", "Dragonfruit", 20);
+
+    DijkstraSSSP djsp(G, "Not_Connected_Vertex");
+    Graph T = djsp.findSP(G);
+
+    REQUIRE(T.getVertices().size() == 1);
+    REQUIRE(T.getEdges().size() == 0);
+}
