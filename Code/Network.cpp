@@ -104,10 +104,11 @@ std::vector<Vertex> NetworkBuilder::store_path(std::map<Vertex, Vertex> & p, Ver
     Vertex curr = begin;
     //std::cout << "This is the current value";
     while (curr != landmark){
-        std::cout << curr << std::endl;
+        std::cout << curr;
         curr = p[curr];
     }
-    std::cout << landmark << std::endl;
+
+    std::cout << landmark;
 
     std::vector<Vertex> reverse;
     curr = end;
@@ -116,9 +117,9 @@ std::vector<Vertex> NetworkBuilder::store_path(std::map<Vertex, Vertex> & p, Ver
         reverse.push_back(curr);
         curr = p[curr];
     }
-    
+
     for (int i = reverse.size() - 1; i >= 0; i--){
-        std::cout << reverse[i] << std::endl;
+        std::cout << reverse[i];
     }
 
     return path;
