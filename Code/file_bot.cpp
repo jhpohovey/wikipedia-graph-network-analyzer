@@ -77,14 +77,14 @@ std::vector<std::vector<std::string>> file_to_struct(const std::string & filenam
       token = strtok (NULL, ";\n");
     }
 
-    std::cout << "{";
+    /*std::cout << "{";
     for (size_t i = 0; i < line.size(); ++i) { // this print helps with formatting for test case solutions
         std::cout << "\"" << line[i] << "\""; //also helps with checking that it works
         if (i != line.size() - 1) {
           std::cout << ", ";
         }
     }
-    std::cout << "}" << std::endl;
+    std::cout << "}" << std::endl;*/
     out.push_back(line);
   } 
   return out;
