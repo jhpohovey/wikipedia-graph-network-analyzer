@@ -36,3 +36,13 @@ bool PriorityQueue::empty() {
     return pq.empty();
 }
 
+bool PriorityQueue::clear() {
+    while (!pq.empty()) {
+        pq.pop();
+    }
+
+    if (pq.size() == 0) {
+        return true;
+    }
+    return false;
+}

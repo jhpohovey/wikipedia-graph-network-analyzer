@@ -70,7 +70,7 @@ TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct vertices", "[part=net
     REQUIRE (G.vertexExists("African_slave_trade") == true);
 }
 
-TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct edges/", "[part=network]") {
+TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct edges", "[part=network]") {
     NetworkBuilder nb ("tests/SingleLine.txt");
     nb.constructGraph();
 
@@ -81,6 +81,26 @@ TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct edges/", "[part=netwo
     REQUIRE(G.edgeExists("Pacific_Ocean","Atlantic_Ocean") == true);
     REQUIRE(G.edgeExists("Pacific_Ocean","Atlantic_slave_trade") == false);
     REQUIRE(G.edgeExists("Atlantic_slave_trade","African_slave_trade") == true);
+}
+
+TEST_CASE("NetworkBuilder(SingleLine.txt) produces correct edge weights", "[part=network]") {
+    NetworkBuilder nb ("tests/SingleLine.txt");
+    nb.constructGraph();
+
+    const Graph& G = nb.getGraph();
+
+    std::string str = "14th_century";
+    REQUIRE(G.edgeExists("14th_century","15th_century") == true);
+    REQUIRE(G.getEdgeWeight("14th_century","15th_century") == str.length());
+
+    str = "Pacific_Ocean";
+    REQUIRE(G.edgeExists("Pacific_Ocean","Atlantic_Ocean") == true);
+    REQUIRE(G.getEdgeWeight("Pacific_Ocean","Atlantic_Ocean") == str.length());
+
+    str = "African_slave_trade";
+    REQUIRE(G.edgeExists("Atlantic_slave_trade","African_slave_trade") == true);
+    REQUIRE(G.getEdgeWeight("Atlantic_slave_trade","African_slave_trade") == str.length());
+
 }
 
 TEST_CASE("NetworkBuilder(landmarktest.txt) produces correct vertices", "[part=network]") {
