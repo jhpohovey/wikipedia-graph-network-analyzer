@@ -558,3 +558,127 @@ TEST_CASE("Check that Dijkstra's algorithm is not run on a disconnected starting
     REQUIRE(T.getVertices().size() == 1);
     REQUIRE(T.getEdges().size() == 0);
 }
+
+TEST_CASE("Shortest path from start to destination is returned (|V| = 4) Med","[part=sssp][part=path]") {
+    /* G visual:
+                        20
+            Apple ------------------ Dragonfruit
+              |   \                     |   
+           5  |        \   10           |
+              |            \            |   15
+              |                 \       |
+              |                     \   |
+            Banana ------------------ Carrot
+                            6
+    */
+    
+    Graph G(true, false);
+    G.insertVertex("Apple");
+    G.insertVertex("Banana");
+    G.insertVertex("Carrot");
+    G.insertVertex("Dragonfruit");
+
+    G.insertEdge("Apple", "Banana");
+    G.setEdgeWeight("Apple", "Banana", 5);
+
+    G.insertEdge("Apple", "Carrot");
+    G.setEdgeWeight("Apple", "Carrot", 10);
+
+    G.insertEdge("Banana", "Carrot");
+    G.setEdgeWeight("Banana", "Carrot", 6);
+
+    G.insertEdge("Carrot", "Dragonfruit");
+    G.setEdgeWeight("Carrot", "Dragonfruit", 15);
+
+    G.insertEdge("Apple", "Dragonfruit");
+    G.setEdgeWeight("Apple", "Dragonfruit", 20);
+
+    DijkstraSSSP djsp(G, "Apple");
+    Graph T = djsp.findSP(G);
+
+    Vertex dest = "Carrot";
+    std::vector<Vertex> path = djsp.pathToDestination(dest);
+    REQUIRE(path.size() == 2);
+    REQUIRE(path[0] == "Apple");
+    REQUIRE(path[1] == "Carrot");
+    path.clear();
+
+    dest = "Banana";
+    path = djsp.pathToDestination(dest);
+    REQUIRE(path.size() == 2);
+    REQUIRE(path[0] == "Apple");
+    REQUIRE(path[1] == "Banana");
+    path.clear();
+
+    dest = "Dragonfruit";
+    path = djsp.pathToDestination(dest);
+    REQUIRE(path.size() == 2);
+    REQUIRE(path[0] == "Apple");
+    REQUIRE(path[1] == "Dragonfruit");
+}
+
+TEST_CASE("Shortest path from start to destination is returned (|V| = 4) Hard","[part=sssp][part=path]") {
+
+    /* G visual:
+                        20
+            Apple ------------------ Dragonfruit
+              |   \                  /   |   
+           5  |    15  \        /        |
+              |           / \            |   25
+              |       /          \       |
+              |   / 7                \   |
+            Banana ------------------ Carrot
+                            6
+    */
+
+    Graph G(true, false);
+    G.insertVertex("Apple");
+    G.insertVertex("Banana");
+    G.insertVertex("Carrot");
+    G.insertVertex("Dragonfruit");
+
+    G.insertEdge("Apple", "Banana");
+    G.setEdgeWeight("Apple", "Banana", 5);
+
+    G.insertEdge("Apple", "Carrot");
+    G.setEdgeWeight("Apple", "Carrot", 15);
+
+    G.insertEdge("Banana", "Carrot");
+    G.setEdgeWeight("Banana", "Carrot", 6);
+
+    G.insertEdge("Banana", "Dragonfruit");
+    G.setEdgeWeight("Banana", "Dragonfruit", 7);
+
+    G.insertEdge("Carrot", "Dragonfruit");
+    G.setEdgeWeight("Carrot", "Dragonfruit", 25);
+
+    G.insertEdge("Apple", "Dragonfruit");
+    G.setEdgeWeight("Apple", "Dragonfruit", 20);
+
+    DijkstraSSSP djsp(G, "Apple");
+    const Graph& T = djsp.findSP(G);
+
+    Vertex dest = "Banana";
+    std::vector<Vertex> path = djsp.pathToDestination(dest);
+    REQUIRE(path.size() == 2);
+    REQUIRE(path[0] == "Apple");
+    REQUIRE(path[1] == "Banana");
+    path.clear();
+
+    dest = "Carrot";
+    path = djsp.pathToDestination(dest);
+    REQUIRE(path.size() == 3);
+    REQUIRE(path[0] == "Apple");
+    REQUIRE(path[1] == "Banana");
+    REQUIRE(path[2] == "Carrot");
+    path.clear();
+
+    dest = "Dragonfruit";
+    path = djsp.pathToDestination(dest);
+    REQUIRE(path.size() == 3);
+    REQUIRE(path[0] == "Apple");
+    REQUIRE(path[1] == "Banana");
+    REQUIRE(path[2] == "Dragonfruit");
+    path.clear();
+
+}
