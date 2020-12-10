@@ -109,6 +109,7 @@ void GraphVisualizer::FruchtermanReingold(size_t iterations) {
 cs225::PNG GraphVisualizer::drawGraph(bool shape) {
 
     int div = 10;
+    bool edge = true;
     std::vector<cs225::HSLAPixel> colors;
     for (int i = 0; i < 360 / div; ++i) {
         cs225::HSLAPixel p((i * div), .75, .5, .75);
@@ -124,12 +125,6 @@ cs225::PNG GraphVisualizer::drawGraph(bool shape) {
         double xdisp = n.disp.x;
         double ydisp = n.disp.y;
 
-        auto lookup = freqList.find(v);
-        if (lookup == freqList.end()) {
-            std::cout << "Frequency hashmap error" << std::endl;
-            abort();
-        }
-        int freq = lookup->second;
         //std::cout << "Xpos:" << xpos << ", Xdisp: " << xdisp << std::endl;
         //std::cout << "Ypos:" << ypos << ", Ydisp: " << ydisp << std::endl << std::endl;
         unsigned xfin = (unsigned int) (std::abs(xpos + xdisp)) % (unsigned int) (.9 * width) + (.05 * width);
@@ -138,13 +133,27 @@ cs225::PNG GraphVisualizer::drawGraph(bool shape) {
         //std::cout << it->second.pos.x << " Before " << it->second.pos.y << std::endl << std::endl;
         n.pos.x = xfin;
         n.pos.y = yfin;
+    }
         //std::cout << n.pos.x << " After" << n.pos.y << std::endl << std::endl;
         //std::cout << it->second.pos.x << " After " << it->second.pos.y << std::endl << std::endl;
-        drawEdges();
+    drawEdges();
         //unsigned xfin = std::abs(xpos);
         //unsigned yfin = std::abs(ypos);
         //xfin = (xfin + rand() % width) % width;
         //yfin = (yfin + rand() % height) % height;
+    for (auto it = vnTable.begin(); it != vnTable.end(); ++it) {
+        Vertex v = it->first;
+
+        Node& n = it->second;
+        unsigned xfin = n.pos.x;
+        unsigned yfin = n.pos.y;
+
+        auto lookup = freqList.find(v);
+        if (lookup == freqList.end()) {
+            std::cout << "Frequency hashmap error" << std::endl;
+            abort();
+        }
+        int freq = lookup->second;
 
         cs225::HSLAPixel color = colors[rand() % colors.size()];
         //std::cout << "Freq" << freq << std::endl;
@@ -288,7 +297,7 @@ void GraphVisualizer::drawLine(double x1, double x2, double y1, double y2) {
                 int y = slope * (x - x1) + y1;
                 cs225::HSLAPixel& pixel = png.getPixel(x, y);
                 pixel.l = black.l;
-                x+=10;
+                x+=2;
                 //std::cout << x << std::endl;
             }
         }
@@ -299,7 +308,7 @@ void GraphVisualizer::drawLine(double x1, double x2, double y1, double y2) {
                 int y = slope * (x - x2) + y2;
                 cs225::HSLAPixel& pixel = png.getPixel(x, y);
                 pixel.l = black.l;
-                x+=10;
+                x+=2;
                 //std::cout << x << std::endl;
             }
         }
