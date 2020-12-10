@@ -19,10 +19,10 @@ class Landmark {
         std::map<Vertex, Vertex> getPred();
         std::vector<Vertex> getPath();
         void printPath(); 
+        int getLength();
 
 
     private:
-        //Graph tree_;
         std::map<Vertex, Vertex> pred;
         std::vector<Vertex> path_;
 
