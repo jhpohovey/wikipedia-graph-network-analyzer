@@ -144,6 +144,10 @@ bool DijkstraSSSP::checkConnectivity(const Vertex& v) const{
 
 std::vector<Vertex> DijkstraSSSP::pathToDestination (Vertex dest) {
     std::vector<Vertex> path;
+    if (!checkConnectivity(dest)) {
+        path.push_back("Destination not connected to starting vertex");
+        return path;
+    }
     path.push_back(dest);
     auto lookup = pred.find(dest);
     while (lookup->second != "") {
