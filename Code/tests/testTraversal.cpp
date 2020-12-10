@@ -27,8 +27,29 @@ TEST_CASE("testing one line for all discovery (Discovery Edge Test)", "[part=bfs
     for(Edge e : result.getEdges()){
         REQUIRE(result.getEdgeLabel(e.source,e.dest) == "DISCOVERY");
     }
+}
 
-  
+TEST_CASE("Graph with disconnected nodes", "[part=bfs]") {
+    NetworkBuilder nb("tests/Disconnected.txt");
+    nb.constructGraph();
+    
+    const Graph& g = nb.getGraph();
+    BFS test;
+    Graph result = test.BFScomplete(g);
+
+    REQUIRE(result.edgeExists("A", "B") == true);
+    REQUIRE(result.edgeExists("B", "C") == true);
+    REQUIRE(result.edgeExists("C", "D") == true);
+    REQUIRE(result.edgeExists("E", "F") == true);
+    REQUIRE(result.edgeExists("F", "G") == true);
+    REQUIRE(result.edgeExists("G", "H") == true);
+    REQUIRE(result.edgeExists("D", "E") == false);
+    REQUIRE(result.getEdgeLabel("A","B") == "DISCOVERY");
+    REQUIRE(result.getEdgeLabel("B","C") == "DISCOVERY");
+    REQUIRE(result.getEdgeLabel("C","D") == "DISCOVERY");
+    REQUIRE(result.getEdgeLabel("E","F") == "DISCOVERY");
+    REQUIRE(result.getEdgeLabel("F","G") == "DISCOVERY");
+    REQUIRE(result.getEdgeLabel("G","H") == "DISCOVERY");   
 }
 
 TEST_CASE("Graph with a disconnected vertex", "[part=bfs]") {
@@ -52,7 +73,7 @@ TEST_CASE("Graph with a disconnected vertex", "[part=bfs]") {
     REQUIRE(result.getEdgeLabel("B","C") == "DISCOVERY"); 
 }
 
-TEST_CASE("Graph with cross edge", "[part=bfs]") {
+TEST_CASE("Graph with discovery and cross edges 1", "[part=bfs]") {
     NetworkBuilder nb("tests/crossedge.txt");
     nb.constructGraph();
     
@@ -64,6 +85,7 @@ TEST_CASE("Graph with cross edge", "[part=bfs]") {
     REQUIRE(result.vertexExists("B") == true);
     REQUIRE(result.vertexExists("C") == true);
     REQUIRE(result.vertexExists("D") == true);
+    REQUIRE(result.vertexExists("E") == true);
     REQUIRE(result.getEdgeLabel("A","B") == "DISCOVERY");
     REQUIRE(result.getEdgeLabel("A","C") == "DISCOVERY");
     REQUIRE(result.getEdgeLabel("A","E") == "DISCOVERY");
@@ -91,7 +113,7 @@ TEST_CASE("Graph with cross edge", "[part=bfs]") {
     REQUIRE(REQ3 == true);
 }
 
-TEST_CASE("Graph with discovery and cross edges", "[part=bfs]") {
+TEST_CASE("Graph with discovery and cross edges 2", "[part=bfs]") {
     NetworkBuilder nb("tests/discoverycross.txt");
     nb.constructGraph();
     
@@ -101,60 +123,40 @@ TEST_CASE("Graph with discovery and cross edges", "[part=bfs]") {
 
     bool REQ1 = false;
     bool REQ2 = false;
-    if(result.getEdgeLabel("A","B") == "DISCOVERY" || result.getEdgeLabel("A","B") == "CROSS") REQ1 = true;
+    if(result.getEdgeLabel("A","B") == "DISCOVERY") REQ1 = true;
     if(result.getEdgeLabel("A","C") == "CROSS" || result.getEdgeLabel("A","C") == "DISCOVERY") REQ2 = true;
     REQUIRE(REQ1 == true);
     REQUIRE(REQ2 == true);
     REQUIRE(result.getEdgeLabel("B","C") == "DISCOVERY");
     REQUIRE(result.getEdgeLabel("C","D") == "DISCOVERY");
-
-    NetworkBuilder nb2("tests/discoverycross2.txt");
-    nb2.constructGraph();
-    
-    const Graph& g2 = nb2.getGraph();
-    BFS test2;
-    Graph result2 = test2.BFScomplete(g);
-
-    bool REQ3 = false;
-    bool REQ4 = false;
-
-    REQUIRE(result2.getEdgeLabel("A","B") == "DISCOVERY");
-    REQUIRE(result2.getEdgeLabel("A","C") == "DISCOVERY");
-    REQUIRE(result2.getEdgeLabel("A","D") == "DISCOVERY");
-    REQUIRE(result2.getEdgeLabel("C","D") == "CROSS");
-    if(result2.getEdgeLabel("B","E") == "DISCOVERY") {
-        if(result2.getEdgeLabel("C","E") == "CROSS") {
-            REQ3 = true;
-        }
-    } 
-    if(result2.getEdgeLabel("C","E") == "DISCOVERY") {
-        if(result2.getEdgeLabel("B","E") == "CROSS") {
-            REQ4 = true;
-        }
-    }
-    REQUIRE(REQ3 == true);
-    REQUIRE(REQ4 == true);
 }
 
-TEST_CASE("Graph with disconnected nodes", "[part=bfs]") {
-    NetworkBuilder nb("tests/Disconnected.txt");
+TEST_CASE("Graph with discovery and cross edges 3", "[part=bfs]") {
+    NetworkBuilder nb("tests/discoverycross2.txt");
     nb.constructGraph();
     
     const Graph& g = nb.getGraph();
     BFS test;
     Graph result = test.BFScomplete(g);
 
-    REQUIRE(result.edgeExists("A", "B") == true);
-    REQUIRE(result.edgeExists("B", "C") == true);
-    REQUIRE(result.edgeExists("C", "D") == true);
-    REQUIRE(result.edgeExists("E", "F") == true);
-    REQUIRE(result.edgeExists("F", "G") == true);
-    REQUIRE(result.edgeExists("G", "H") == true);
-    REQUIRE(result.edgeExists("D", "E") == false);
+    bool REQ1 = false;
+    bool REQ2 = false;
+
     REQUIRE(result.getEdgeLabel("A","B") == "DISCOVERY");
-    REQUIRE(result.getEdgeLabel("B","C") == "DISCOVERY");
-    REQUIRE(result.getEdgeLabel("C","D") == "DISCOVERY");
-    REQUIRE(result.getEdgeLabel("E","F") == "DISCOVERY");
-    REQUIRE(result.getEdgeLabel("F","G") == "DISCOVERY");
-    REQUIRE(result.getEdgeLabel("G","H") == "DISCOVERY");   
+    REQUIRE(result.getEdgeLabel("A","C") == "DISCOVERY");
+    REQUIRE(result.getEdgeLabel("A","D") == "DISCOVERY");
+    REQUIRE(result.getEdgeLabel("C","D") == "CROSS");
+    if(result.getEdgeLabel("B","E") == "DISCOVERY") {
+        if(result.getEdgeLabel("C","E") == "CROSS") {
+            REQ1 = true;
+        }
+    } 
+    if(result.getEdgeLabel("C","E") == "DISCOVERY") {
+        if(result.getEdgeLabel("B","E") == "CROSS") {
+            REQ2 = true;
+        }
+    }
+    REQUIRE(REQ1 == true);
+    REQUIRE(REQ2 == true);
+
 }
