@@ -144,26 +144,50 @@ TEST_CASE("Graph with discovery and cross edges 3", "[part=bfs]") {
     
     const Graph& g = nb.getGraph();
     BFS test;
+    Vertex v = "A";
     Graph result = test.BFScomplete(g);
 
-    bool REQ1 = false;
-    bool REQ2 = false;
+    bool REQ = false;
 
-    REQUIRE(result.getEdgeLabel("A","B") == "DISCOVERY");
-    REQUIRE(result.getEdgeLabel("A","C") == "DISCOVERY");
-    REQUIRE(result.getEdgeLabel("A","D") == "DISCOVERY");
-    REQUIRE(result.getEdgeLabel("C","D") == "CROSS");
-    if(result.getEdgeLabel("B","E") == "DISCOVERY") {
-        if(result.getEdgeLabel("C","E") == "CROSS") {
-            REQ1 = true;
-        }
-    } 
-    if(result.getEdgeLabel("C","E") == "DISCOVERY") {
-        if(result.getEdgeLabel("B","E") == "CROSS") {
-            REQ2 = true;
+    //if starting vertex at "A"
+    if(result.getEdgeLabel("A","B") == "DISCOVERY"&&result.getEdgeLabel("A","C") == "DISCOVERY"&&result.getEdgeLabel("A","D") == "DISCOVERY"&&result.getEdgeLabel("D","C") == "CROSS"){
+        if((result.getEdgeLabel("E","B") == "DISCOVERY"&&result.getEdgeLabel("C","E") == "CROSS") || (result.getEdgeLabel("E","B") == "CROSS"&&result.getEdgeLabel("C","E") == "DISCOVERY")){
+            REQ = true;
         }
     }
-    REQUIRE(REQ1 == true);
-    REQUIRE(REQ2 == true);
+    //if starting vertex at "B"
+    if(result.getEdgeLabel("A","B") == "DISCOVERY"&&result.getEdgeLabel("A","D") == "DISCOVERY"&&result.getEdgeLabel("C","D") == "CROSS"&&result.getEdgeLabel("B","E") == "DISCOVERY"){
+        if((result.getEdgeLabel("A","C") == "DISCOVERY"&&result.getEdgeLabel("C","E") == "CROSS") || (result.getEdgeLabel("A","C") == "CROSS"&&result.getEdgeLabel("C","E") == "DISCOVERY")){
+            REQ = true;
+        }
+    }
+    //if starting vertes at "C"
+    if(result.getEdgeLabel("A","C") == "DISCOVERY"&&result.getEdgeLabel("A","D") == "CROSS"&&result.getEdgeLabel("C","D") == "DISCOVERY"&&result.getEdgeLabel("E","C") == "DISCOVERY"){
+        if((result.getEdgeLabel("A","B") == "DISCOVERY"&&result.getEdgeLabel("B","E") == "CROSS") || (result.getEdgeLabel("A","B") == "CROSS"&&result.getEdgeLabel("B","E") == "DISCOVERY")){
+            REQ = true;
+        }
+    }
+    //if starting vertex at "D"
+    if(result.getEdgeLabel("A","B") == "DISCOVERY"&&result.getEdgeLabel("A","C") == "CROSS"&&result.getEdgeLabel("A","D") == "DISCOVERY"&&result.getEdgeLabel("D","C") == "DISCOVERY"){
+        if((result.getEdgeLabel("E","B") == "CROSS"&&result.getEdgeLabel("C","E") == "DISCOVERY")){
+            REQ = true;
+        }
+    }
+    //if starting vertex at "E"
+    if(result.getEdgeLabel("A","D") == "CROSS"&&result.getEdgeLabel("D","C") == "DISCOVERY"&&result.getEdgeLabel("B","E") == "DISCOVERY"&&result.getEdgeLabel("E","C") == "DISCOVERY"){
+        if((result.getEdgeLabel("A","B") == "DISCOVERY"&&result.getEdgeLabel("C","A") == "CROSS") || (result.getEdgeLabel("A","B") == "CROSS"&&result.getEdgeLabel("C","A") == "DISCOVERY")){
+            REQ = true;
+        }
+    }
+    REQUIRE(REQ == true);
 
+    /*
+    A. a-b:D  a-c:D  a-d:D  d-c:C  b-e:D/C  c-e:D/C 
+    B. a-b:D  a-c:D/C  a-d:D  d-c:C  b-e:D  c-e:D/c 
+    C. a-b:D/C  a-c:D  a-d:C  d-c:D  b-e:D/c  c-e:D 
+    D. a-b:D  a-c:C  a-d:D  d-c:D  b-e:C  c-e:D 
+    E. a-b:D/C  a-c:D/C  a-d:C  d-c:D  b-e:D  c-e:D
+    */
 }
+
+ 
