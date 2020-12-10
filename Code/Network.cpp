@@ -54,13 +54,15 @@ void NetworkBuilder::buildGraphSection(std::vector<Vertex> vertexList) {
             if (lookup == vertexFreqTable.end()) {
                 vertexFreqTable.insert(std::make_pair(u, 1));
             } else {
-                ++vertexFreqTable[u];
+                //std::cout << "Before " <<vertexFreqTable[u];
+                lookup->second += sqrt(lookup->second*sqrt(lookup->second));
+                //std::cout <<", After " << vertexFreqTable[u] << std::endl;
             }
             lookup = vertexFreqTable.find(v);
             if (lookup == vertexFreqTable.end()) {
                 vertexFreqTable.insert(std::make_pair(v, 1));
             } else {
-                ++vertexFreqTable[v];
+                lookup->second = sqrt(lookup->second * sqrt(lookup->second));
             }
 
             g_.insertVertex(u);
@@ -145,6 +147,6 @@ const Graph& NetworkBuilder::getGraph() const {
     return g_;
 }
 
-const std::unordered_map<Vertex, int>& NetworkBuilder::getFreqTable() const {
+const std::unordered_map<Vertex, double>& NetworkBuilder::getFreqTable() const {
     return vertexFreqTable;
 }

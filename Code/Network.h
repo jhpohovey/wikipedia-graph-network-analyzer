@@ -17,7 +17,7 @@ class NetworkBuilder {
         NetworkBuilder(const std::string & filename);
         Graph& constructGraph();
         const Graph& getGraph() const;
-        const std::unordered_map<Vertex, int>& getFreqTable() const;
+        const std::unordered_map<Vertex, double>& getFreqTable() const;
 
     private:
         Graph g_;
@@ -27,6 +27,6 @@ class NetworkBuilder {
         //each element in outer vector represents each line of the .txt file
         //each element j at every vector[i] represents the individual links from one line
         std::vector<std::vector<std::string>> data_;
-        std::unordered_map<Vertex, int> vertexFreqTable;
+        std::unordered_map<Vertex, double> vertexFreqTable;
 
 };
