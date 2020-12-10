@@ -16,7 +16,7 @@ void Landmark::get_span(const Graph & graph, Vertex landmark){
     }
 
     visited[landmark] = true;
-    pred[landmark] = "starting";
+    pred[landmark] = "Starting";
     q.push(landmark);
 
     while(!q.empty()){
@@ -69,8 +69,8 @@ void Landmark::store_path(Vertex begin, Vertex landmark, Vertex end){
         //std::cout << reverse[i];
         path_.push_back(reverse[i]);
     }
-    std::cout << begin << landmark << end << std::endl;
-    printPath();
+    //std::cout << begin << landmark << end << std::endl;
+    //printPath();
 
     return;
 }
