@@ -6,19 +6,30 @@ Landmark::Landmark(const Graph & graph, Vertex landmark) {
     get_span(graph, landmark);
 }
 
+/*
+ * get_span() is using a modified version of BFS to create a 
+ * minimum spanning tree from the landmark vertex. This way, 
+ * only one call to get_span() will give the minimum connections
+ * between beginning vertex, landmark vertex, and end vertex
+ */
 void Landmark::get_span(const Graph & graph, Vertex landmark){
     
     std::queue<Vertex> q;
     std::map<Vertex, bool> visited;
+
+    //Set every vertex as being unvisited and no predecessor
     for(Vertex u : graph.getVertices()){
         visited[u] = false;
         pred[u] = "0";
     }
 
+    //Processes landmark vertex as starting point in spanning tree
     visited[landmark] = true;
     pred[landmark] = "Starting";
     q.push(landmark);
 
+    //Modification on BFS to only search one component
+    //Keeps track of each vertex's immediate predecessor
     while(!q.empty()){
         Vertex w = q.front();
         q.pop();
@@ -34,55 +45,66 @@ void Landmark::get_span(const Graph & graph, Vertex landmark){
     return;
 }
 
+/*
+ * Manipulates the predecessor map to create a vector of 
+ * vertices that starts at the beggining vertex, passes 
+ * through the landmark vertex, and ends at the end vertex
+ */
 void Landmark::store_path(Vertex begin, Vertex landmark, Vertex end){
 
-    std::vector<Vertex> path;
+    //Determine if the vertices of interest are actually conncected
     if (pred[begin] == "0" || pred[end] == "0"){
         std::cout << "There is no path through these points :(" << std::endl;
         return;
     }
 
-    //std::cout << begin << ", " << landmark << ", " << "and " << end << " are connected." << std::endl;
-    //std::cout << "Thank god1" << std::endl;
+    //Following predecessors from beginning
+    //vertex to landmark creates beginning 
+    //of desired path
     Vertex curr = begin;
-    //std::cout << "This is the current value: " << curr << std::endl;
-    //std::cout << "This is the predecessor: " << pred[curr] << std::endl;
-
     while (curr != landmark){
         path_.push_back(curr);
-        //std::cout << curr;
         curr = pred[curr];
     }
 
-    //std::cout << landmark;
-    path_.push_back(landmark);
+    
+    path_.push_back(landmark); //include landmark in path
 
+    //Following predecessor from end
+    //vertex to landmark creates a reversed verion
+    //of end of desired path
     std::vector<Vertex> reverse;
     curr = end;
-
     while (curr != landmark){
         reverse.push_back(curr);
         curr = pred[curr];
     }
 
+    //Reverse the end of path and add to resultant path
     for (int i = reverse.size() - 1; i >= 0; i--){
-        //std::cout << reverse[i];
         path_.push_back(reverse[i]);
     }
-    //std::cout << begin << landmark << end << std::endl;
-    //printPath();
 
     return;
 }
 
+/*
+ * Prints out formatted path using the previously
+ * determined path vector
+ */
 void Landmark::printPath(){
+
+    //No valid path exists
     if (path_.size() == 0 || path_.size() == 1 || path_.size() == 2){
         std::cout << "Sorry there is no path between these" << std::endl;
     }
 
+    //Iterate through path and print;
+    std::cout << "Start -> ";
     for (size_t i = 0; i < path_.size(); i++){
-        std::cout << path_[i];
+        std::cout << path_[i] << " -> ";
     }
+    std::cout << "End" <<std::endl;
 
     return;
 }
@@ -95,3 +117,6 @@ std::vector<Vertex> Landmark::getPath(){
     return path_;
 }
 
+int Landmark::getLength(){
+    return path_.size() -1;
+}
