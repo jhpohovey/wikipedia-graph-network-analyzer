@@ -15,12 +15,9 @@ class NetworkBuilder {
     public:
         NetworkBuilder();
         NetworkBuilder(const std::string & filename);
-        //std::string reader(const std::string & filename);
-        //std::vector<Vertex> createSingleLineVertexList(const std::string & filename);
         Graph& constructGraph();
-        const Graph& getGraph();
-        //std::map<Vertex, Vertex> get_span(Vertex landmark);
-        //std::vector<Vertex> store_path(std::map<Vertex, Vertex> & predecessor, Vertex begin, Vertex landmark, Vertex end);
+        const Graph& getGraph() const;
+        const std::unordered_map<Vertex, int>& getFreqTable() const;
 
     private:
         Graph g_;
@@ -30,5 +27,6 @@ class NetworkBuilder {
         //each element in outer vector represents each line of the .txt file
         //each element j at every vector[i] represents the individual links from one line
         std::vector<std::vector<std::string>> data_;
+        std::unordered_map<Vertex, int> vertexFreqTable;
 
 };

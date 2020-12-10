@@ -47,14 +47,27 @@ Graph& NetworkBuilder::constructGraph() {
 void NetworkBuilder::buildGraphSection(std::vector<Vertex> vertexList) {
     if (vertexList.size() > 1) {
         for (size_t i = 0; i < vertexList.size() - 1; ++i) {
-        Vertex u = vertexList.at(i);
-        Vertex v = vertexList.at(i + 1);
+            Vertex u = vertexList.at(i);
+            Vertex v = vertexList.at(i + 1);
 
-        g_.insertVertex(u);
-        g_.insertVertex(v);
-        g_.insertEdge(u, v);
-        int weight = u.length() <= v.length() ? u.length() : v.length();
-        g_.setEdgeWeight(u,v, weight);
+            auto lookup = vertexFreqTable.find(u);
+            if (lookup == vertexFreqTable.end()) {
+                vertexFreqTable.insert(std::make_pair(u, 1));
+            } else {
+                ++vertexFreqTable[u];
+            }
+            lookup = vertexFreqTable.find(v);
+            if (lookup == vertexFreqTable.end()) {
+                vertexFreqTable.insert(std::make_pair(v, 1));
+            } else {
+                ++vertexFreqTable[v];
+            }
+
+            g_.insertVertex(u);
+            g_.insertVertex(v);
+            g_.insertEdge(u, v);
+            int weight = u.length() <= v.length() ? u.length() : v.length();
+            g_.setEdgeWeight(u,v, weight);
         }
     }
     else if (vertexList.size() == 1) {
@@ -128,6 +141,10 @@ std::vector<Vertex> NetworkBuilder::store_path(std::map<Vertex, Vertex> & p, Ver
     return path;
 }*/
 
-const Graph& NetworkBuilder::getGraph() {
+const Graph& NetworkBuilder::getGraph() const {
     return g_;
+}
+
+const std::unordered_map<Vertex, int>& NetworkBuilder::getFreqTable() const {
+    return vertexFreqTable;
 }
