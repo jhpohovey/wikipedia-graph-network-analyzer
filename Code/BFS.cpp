@@ -59,7 +59,7 @@ void BFS::BFShelper(const Graph &g,const Vertex &v) {
                 g_.setEdgeLabel(temp, w, "DISCOVERY");
                 beenVisited_.at(w) = true;
                 q.push(w);
-            } else if(g.getEdgeLabel(temp, w) == "UNEXPLORED") {
+            } else if(g_.getEdgeLabel(temp, w) == "UNEXPLORED") {
                 g_.setEdgeLabel(temp, w, "CROSS");
             }
         }

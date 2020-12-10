@@ -1,4 +1,2 @@
 A;B;C
 A;C
-A;D;C
-A;E;C
