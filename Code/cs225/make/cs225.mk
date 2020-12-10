@@ -15,7 +15,7 @@ LD = clang++
 OBJS_DIR = .objs
 
 # Add standard CS 225 object files
-//OBJS += cs225/HSLAPixel.o cs225/PNG.o cs225/lodepng/lodepng.o
+#//OBJS += cs225/HSLAPixel.o cs225/PNG.o cs225/lodepng/lodepng.o
 
 # -MMD and -MP asks clang++ to generate a .d file listing the headers used in the source code for use in the Make process.
 #   -MMD: "Write a depfile containing user headers"
