@@ -45,7 +45,7 @@ std::string readLine(const std::string & filename) {
 }
 
 /**
- * @brief 
+ * @brief Parses the text file and stores the read data into a 2D vector of strings, aka vertices
  * 
  * @param filename 
  * @return std::vector<std::vector<std::string>> 
@@ -77,15 +77,20 @@ std::vector<std::vector<std::string>> file_to_struct(const std::string & filenam
       token = strtok (NULL, ";\n");
     }
 
+    out.push_back(line);
+
+
+    //print to terminal to see data being read in
     /*std::cout << "{";
-    for (size_t i = 0; i < line.size(); ++i) { // this print helps with formatting for test case solutions
-        std::cout << "\"" << line[i] << "\""; //also helps with checking that it works
+    for (size_t i = 0; i < line.size(); ++i) {
+        std::cout << "\"" << line[i] << "\"";
         if (i != line.size() - 1) {
           std::cout << ", ";
         }
     }
     std::cout << "}" << std::endl;*/
-    out.push_back(line);
+
   } 
+  
   return out;
 }

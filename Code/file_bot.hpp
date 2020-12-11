@@ -1,3 +1,15 @@
+/**
+ * @file file_bot.hpp
+ * @author John Pohovey
+ * @brief Contains functions responsible for parsing through .TXT files and storing them in 
+ *        a data structure for use by the NetworkBuilder class when construction the graph
+ *        with all vertices and edges
+ * @version 0.1
+ * @date December 2020
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 
 #include <string>
 #include <cstdlib>
@@ -19,7 +31,7 @@ std::vector<std::string> file_to_vector(const std::string & filename);
 std::string readLine(const std::string & filename);
 
 /**
- * @brief 
+ * @brief Parses the text file and stores the read data into a 2D vector of strings, aka vertices
  * 
  * @param filename 
  * @return std::vector<std::vector<std::string>> 
