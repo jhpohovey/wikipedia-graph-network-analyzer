@@ -55,14 +55,59 @@ void NetworkBuilder::buildGraphSection(std::vector<Vertex> vertexList) {
                 vertexFreqTable.insert(std::make_pair(u, 1));
             } else {
                 //std::cout << "Before " <<vertexFreqTable[u];
-                lookup->second += sqrt(lookup->second*sqrt(lookup->second));
-                //std::cout <<", After " << vertexFreqTable[u] << std::endl;
+                if (lookup->second == 1) {
+                    ++lookup->second;
+                }
+                else {
+                    //printf("\tU %f\n", (log(lookup->second)));
+                    if (lookup->second < 50) {
+                        lookup->second += (log(lookup->second));//sqrt(lookup->second * sqrt(lookup->second * sqrt(lookup->second * sqrt(lookup->second))));
+                        //std::cout <<", After " << vertexFreqTable[u] << std::endl;
+                    }
+                    else if (lookup->second >= 50 && lookup->second < 250) {
+                        lookup->second += log(log(lookup->second));
+                    }
+                    else if(lookup->second >= 250 && lookup->second < 700) {
+                        lookup->second += log(log(log(lookup->second)));
+                    }
+                    else if (lookup->second >= 700 && lookup->second < 1200) {
+                        lookup->second += .5 * log(log(log(lookup->second)));
+                    }
+                    else {
+                        lookup->second += .25 * (log(log(log(lookup->second))));
+                    }
+                }   
             }
             lookup = vertexFreqTable.find(v);
             if (lookup == vertexFreqTable.end()) {
                 vertexFreqTable.insert(std::make_pair(v, 1));
             } else {
-                lookup->second = sqrt(lookup->second * sqrt(lookup->second));
+                if (lookup->second == 1) {
+                    ++lookup->second;
+                }
+                else {
+                    //printf("\tV %f\n", (log(lookup->second)));
+                    if (lookup->second < 25) {
+                        lookup->second += (log(lookup->second));//sqrt(lookup->second * sqrt(lookup->second * sqrt(lookup->second * sqrt(lookup->second))));
+                        //std::cout <<", After " << vertexFreqTable[u] << std::endl;
+                    }
+                    else if (lookup->second >= 25 && lookup->second < 75) {
+                        lookup->second += log(log(lookup->second));
+                    }
+                    else if(lookup->second >= 75 && lookup->second < 200) {
+                        lookup->second += log(log(log(lookup->second)));
+                    }
+                    else if (lookup->second >= 200 && lookup->second < 400) {
+                        lookup->second += .5 * log(log(log(lookup->second)));
+                    }
+                    else if (lookup->second >= 400 && lookup->second < 800){
+                        lookup->second += .25 * (log(log(log(lookup->second))));
+                    }
+                    else {
+                        lookup->second += .125 * (log(log(log(lookup->second))));
+                    }
+                    
+                }
             }
 
             g_.insertVertex(u);
@@ -75,6 +120,11 @@ void NetworkBuilder::buildGraphSection(std::vector<Vertex> vertexList) {
     else if (vertexList.size() == 1) {
         Vertex v1 = vertexList.at(0);
          g_.insertVertex(v1);
+    }
+
+    for (auto it = vertexFreqTable.begin(); it != vertexFreqTable.end(); ++it) {
+        //std::cout << "Vertex: " << it->first;
+        //printf(", Freq: %f\n", it->second);
     }
 }
 
