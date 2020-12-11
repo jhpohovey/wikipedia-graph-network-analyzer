@@ -20,12 +20,12 @@ void Landmark::get_span(const Graph & graph, Vertex landmark){
     //Set every vertex as being unvisited and no predecessor
     for(Vertex u : graph.getVertices()){
         visited[u] = false;
-        pred[u] = "0";
+        pred[u] = "";
     }
 
     //Processes landmark vertex as starting point in spanning tree
     visited[landmark] = true;
-    pred[landmark] = "Starting";
+    pred[landmark] = "";
     q.push(landmark);
 
     //Modification on BFS to only search one component
@@ -53,7 +53,7 @@ void Landmark::get_span(const Graph & graph, Vertex landmark){
 void Landmark::store_path(Vertex begin, Vertex landmark, Vertex end){
 
     //Determine if the vertices of interest are actually conncected
-    if (pred[begin] == "0" || pred[end] == "0"){
+    if (pred[begin] == "" || pred[end] == "" || begin == landmark || end == landmark){
         std::cout << "There is no path through these points :(" << std::endl;
         return;
     }

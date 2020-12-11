@@ -5,4 +5,4 @@ Week of November 30:
 	This week we were able to develop the functions necessary for taking the data in the given format and converting it to an undirected graph. We also created some small scale tests to determine that the functions worked properly. To test our functions we had to create the makefile which allowed us to compile the code. On the algorithms side, we are almost done with our BFS implementation and it should be ready for testing soon.
 
 Week of December 7:
-	We have started working on both the Landmark algorithm and Dijkstra's Algorithm and hope to be working on writing test cases for these on this Monday.
+	We have started working on both the Landmark algorithm and Dijkstra's Algorithm. We also finished up the BFS traversal algorithm and wrote comprehensive test cases for each of these three algorithms. We also started and finished the graphical represention using the Reingold Algorithm. All large-scale and small-scale bugs and mistakes were flushed out in both functions and test cases. Drafted up and finished creating final presentation and the final report as well as filming and compiling submission video.
