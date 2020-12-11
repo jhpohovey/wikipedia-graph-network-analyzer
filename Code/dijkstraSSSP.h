@@ -1,3 +1,17 @@
+/**
+ * @file dijkstraSSSP.cpp
+ * @author John Pohovey
+ * @brief Implementation of Dijkstra's Single Source Shortest Path Algorithm,
+ *        which given a starting vertex, returns the shortest path to reach any
+ *        other vertex destination present in the graph with support for fetching
+ *        shortest path to a given destination, a cost to reach the destination.
+ * @version 0.1
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
+
 #pragma once
 
 #include "graph.h"
@@ -11,16 +25,19 @@
 
 class DijkstraSSSP {
     public:
+        //implementations notes on function, parameters, returns, etc are all located in the .cpp file
+
         DijkstraSSSP(const Graph& G, Vertex u);
-        const Graph& findSP(const Graph& G);
+        const Graph& calculateShortestPaths();
         
+        std::vector<Vertex> pathToDestination (Vertex dest);
         int calculateCostToVertex(const Vertex& v) const;
         bool checkConnectivity(const Vertex& v) const;
 
         std::unordered_map<Vertex, int> getDists() const;
         std::unordered_map<Vertex, Vertex> getPreds() const;
         Vertex getStart() const;
-        std::vector<Vertex> pathToDestination (Vertex dest);
+
     private:
         PriorityQueue Q;
         Vertex start;

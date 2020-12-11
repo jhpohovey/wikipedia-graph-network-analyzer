@@ -141,7 +141,7 @@ TEST_CASE("Shortest Paths found on small graph (|V| = 4) Easy", "[part=sssp][par
     G.setEdgeWeight("Apple", "Dragonfruit", 20);
 
     DijkstraSSSP djsp(G, "Apple");
-    Graph T = djsp.findSP(G);
+    Graph T = djsp.calculateShortestPaths();
 
     std::vector<Vertex> GvertexList = G.getVertices();
     std::vector<Vertex> TvertexList = T.getVertices();
@@ -202,7 +202,7 @@ TEST_CASE("Shortest Paths found on small graph (|V| = 4) Med", "[part=sssp][part
     G.setEdgeWeight("Apple", "Dragonfruit", 20);
 
     DijkstraSSSP djsp(G, "Apple");
-    Graph T = djsp.findSP(G);
+    Graph T = djsp.calculateShortestPaths();
 
     std::vector<Vertex> GvertexList = G.getVertices();
     std::vector<Vertex> TvertexList = T.getVertices();
@@ -262,7 +262,7 @@ TEST_CASE("Shortest Paths found on small graph (|V| = 4) Hard", "[part=sssp][par
     G.setEdgeWeight("Apple", "Dragonfruit", 20);
 
     DijkstraSSSP djsp(G, "Apple");
-    const Graph& T = djsp.findSP(G);
+    const Graph& T = djsp.calculateShortestPaths();
 
     std::vector<Vertex> GvertexList = G.getVertices();
     std::vector<Vertex> TvertexList = T.getVertices();
@@ -292,7 +292,7 @@ TEST_CASE("Shortest paths found for small graph from file (SingleLine.txt)","[pa
     Vertex start = "Atlantic_slave_trade";
 
     DijkstraSSSP djsp(G, start);
-    const Graph& T = djsp.findSP(G);
+    const Graph& T = djsp.calculateShortestPaths();
 
     std::vector<Vertex> GvertexList = G.getVertices();
     std::vector<Vertex> TvertexList = T.getVertices();
@@ -326,7 +326,7 @@ TEST_CASE("Shortest paths found for med graph from file (Sample1.txt)", "[part=s
     Vertex start = "14th_century";
 
     DijkstraSSSP djsp(G, start);
-    const Graph& T = djsp.findSP(G);
+    const Graph& T = djsp.calculateShortestPaths();
 
     std::vector<Vertex> GvertexList = G.getVertices();
     std::vector<Vertex> TvertexList = T.getVertices();
@@ -375,7 +375,7 @@ TEST_CASE ("Cost to travel from the startving vertex to a vertex B is correct (|
     G.setEdgeWeight("Apple", "Dragonfruit", 20);
 
     DijkstraSSSP djsp(G, "Apple");
-    Graph T = djsp.findSP(G);
+    Graph T = djsp.calculateShortestPaths();
     
     Vertex destination = "Banana";
     int cost = djsp.calculateCostToVertex(destination);
@@ -425,7 +425,7 @@ TEST_CASE("Cost to travel from the startving vertex to a vertex B is correct (|V
     G.setEdgeWeight("Apple", "Dragonfruit", 20);
 
     DijkstraSSSP djsp(G, "Apple");
-    Graph T = djsp.findSP(G);
+    Graph T = djsp.calculateShortestPaths();
 
     Vertex destination = "Banana";
     int cost = djsp.calculateCostToVertex(destination);
@@ -481,7 +481,7 @@ TEST_CASE("Cost to travel from the startving vertex to a vertex B is correct (|V
     G.setEdgeWeight("Apple", "Dragonfruit", 20);
 
     DijkstraSSSP djsp(G, "Apple");
-    const Graph& T = djsp.findSP(G);
+    const Graph& T = djsp.calculateShortestPaths();
 
     Vertex destination = "Banana";
     int cost = djsp.calculateCostToVertex(destination);
@@ -522,7 +522,7 @@ TEST_CASE("Checks that on a graph with disconnected subgraphs, algorithm can det
     G.setEdgeWeight("Apple", "Dragonfruit", 20);
 
     DijkstraSSSP djsp(G, "Apple");
-    Graph T = djsp.findSP(G);
+    Graph T = djsp.calculateShortestPaths();
     int cost = djsp.calculateCostToVertex("Not_Connected_Vertex");
     REQUIRE(cost == INT_MAX); //since cost is infinity, this means that the destination vertex is not connected to the starting vertex, since the value never got udpated.
     bool connected = djsp.checkConnectivity("Not_Connected_Vertex");
@@ -532,7 +532,7 @@ TEST_CASE("Checks that on a graph with disconnected subgraphs, algorithm can det
     REQUIRE(connected == true);
 }
 
-TEST_CASE("Check that Dijkstra's algorithm is not run on a disconnected starting vertex", "[part=sssp][part=cost]") {
+TEST_CASE("Check that Dijkstra's algorithm does not run on a disconnected starting vertex", "[part=sssp][part=cost]") {
     Graph G(true, false);
     G.insertVertex("Apple");
     G.insertVertex("Banana");
@@ -553,7 +553,7 @@ TEST_CASE("Check that Dijkstra's algorithm is not run on a disconnected starting
     G.setEdgeWeight("Apple", "Dragonfruit", 20);
 
     DijkstraSSSP djsp(G, "Not_Connected_Vertex");
-    Graph T = djsp.findSP(G);
+    Graph T = djsp.calculateShortestPaths();
 
     REQUIRE(T.getVertices().size() == 1);
     REQUIRE(T.getEdges().size() == 0);
@@ -594,7 +594,7 @@ TEST_CASE("Shortest path from start to destination is returned (|V| = 4) Med","[
     G.setEdgeWeight("Apple", "Dragonfruit", 20);
 
     DijkstraSSSP djsp(G, "Apple");
-    Graph T = djsp.findSP(G);
+    Graph T = djsp.calculateShortestPaths();
 
     Vertex dest = "Carrot";
     std::vector<Vertex> path = djsp.pathToDestination(dest);
@@ -656,7 +656,7 @@ TEST_CASE("Shortest path from start to destination is returned (|V| = 4) Hard","
     G.setEdgeWeight("Apple", "Dragonfruit", 20);
 
     DijkstraSSSP djsp(G, "Apple");
-    const Graph& T = djsp.findSP(G);
+    const Graph& T = djsp.calculateShortestPaths();
 
     Vertex dest = "Banana";
     std::vector<Vertex> path = djsp.pathToDestination(dest);
