@@ -1,7 +1,12 @@
 /**
  * @file Network.h
  * @author John Pohovey
- * @brief 
+ * @brief This class makes use the functions in file_bot.hpp in order to read data in from a .TXT file
+ *        and store this data in a 2D vector. This 2D vector is used to build and populate the graph
+ *        object with all vertices and edges, based on formatting in the input data file. While 
+ *        building the graph, a map is used to keep track of each vertex's frequency (occurence 
+ *        within the data file). This vertex-frequency map is used in the GraphVisualizer class
+ *        to determine the relative sizes at which to draw the vertices.  
  * @version 0.1
  * @date December 2020
  * 
