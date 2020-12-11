@@ -43,7 +43,7 @@ const Graph& g = nb.getGraph(); //returns a reference to the graph
 Determine the least number of connections for a path between two nodes through any intermediate node.
 
 
-Create the object using the reference to our graph and the given intermediate "landmark" node in path. Store the path using __store_path(startingVertex, mark, destination)__. You can modify those input vertices by changing their previous declaration. Make sure all inputs are actually part of the data set. The startingVertex and destination are allowed to be the same but they __CANNOT__ be the same as the landmark. Call __printPath()__ to print out any valid path and its length (number of edgest travelled).
+Create the object using the reference to our graph and the given intermediate "landmark" node in path. Store the path using __store_path(startingVertex, mark, destination)__. You can modify these input vertices by changing their previous declaration. Make sure all inputs are actually part of the data set (no typos). The startingVertex and destination are allowed to be the same but they __CANNOT__ be the same as the landmark. Call __printPath()__ to print out any valid path and its length (number of edgest travelled).
 
 ```bash
 startingVertex = "14th_century";    //starting vertex
