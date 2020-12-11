@@ -23,7 +23,7 @@ TEST_CASE("Scanning SingleLine.txt forwards creates the right predecessors/", "[
     std::vector<Vertex> ansLine = {"14th_century", "15th_century", "16th_century", "Pacific_Ocean", "Atlantic_Ocean", "Accra", "Africa", "Atlantic_slave_trade", "African_slave_trade"};
     for (size_t i = 0; i < ansLine.size(); i ++){
         if (i == 0){
-            REQUIRE(result.at(ansLine[i]) == "Starting");
+            REQUIRE(result.at(ansLine[i]) == "");
             continue;
         }
         REQUIRE(result.at(ansLine[i]) == ansLine[i-1]);
@@ -42,7 +42,7 @@ TEST_CASE("Scanning SingleLine.txt backwards creates the right predecessors/", "
     std::vector<Vertex> ansLine = {"14th_century", "15th_century", "16th_century", "Pacific_Ocean", "Atlantic_Ocean", "Accra", "Africa", "Atlantic_slave_trade", "African_slave_trade"};
     for (size_t i = 0; i < ansLine.size(); i ++){
         if (i == ansLine.size()-1){
-            REQUIRE(result.at(ansLine[i]) == "Starting");
+            REQUIRE(result.at(ansLine[i]) == "");
             continue;
         }
         REQUIRE(result.at(ansLine[i]) == ansLine[i+1]);
@@ -61,7 +61,10 @@ TEST_CASE("Each vertex has been visited in graph and has a valid predeccessor (S
 
     for (size_t i = 0; i < v.size(); i ++){
         int flag = 0;
-        REQUIRE(result.at(v[i]) != "0");
+        if (v[i] == "Atlantic_Ocean"){
+            continue;
+        }
+        REQUIRE(result.at(v[i]) != "");
         if (std::find(v.begin(), v.end(), result.at(v[i])) != v.end() || result.at(v[i]) == "Starting") flag = 1;
         REQUIRE(flag == 1);
     }
