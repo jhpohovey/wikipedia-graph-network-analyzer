@@ -15,7 +15,7 @@ PriorityQueue::PriorityQueue() {
  */
 PriorityQueue::PriorityQueue(Vertex& s) {
     pq.push(std::make_pair(s, 0));
-}s
+}
 
 /**
  * @brief Push a new pair onto the queue
