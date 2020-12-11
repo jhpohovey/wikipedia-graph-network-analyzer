@@ -157,8 +157,9 @@ cs225::PNG GraphVisualizer::drawGraph(bool shape) {
 
         cs225::HSLAPixel color = colors[rand() % colors.size()];
         //std::cout << "Freq" << freq << std::endl;
-        for (unsigned int i = xfin - .5 * freq; i < xfin + .5 * freq; ++i) {
-            for (unsigned int j = yfin - .5 * freq; j < yfin + .5 * freq; ++j) {
+        double factor  = .5;
+        for (unsigned int i = xfin - std::ceil(factor * freq); i < xfin + std::ceil(factor * freq); ++i) {
+            for (unsigned int j = yfin - std::ceil(factor * freq); j < yfin + std::ceil(factor * freq); ++j) {
                 //std::cout << "Pixel - " << i << ", " << j << std::endl;
                 /*std::cout << "xfin - .25 * 20: " << xfin - .25 * 20 << ", xfin + .25 * 20: " << xfin + .25 * 20 << std::endl;
                 std::cout << "yfin - .25 * 20: " << yfin - .25 * 20 << ", yfin + .25 * 20: " << yfin + .25 * 20 << std::endl;*/
