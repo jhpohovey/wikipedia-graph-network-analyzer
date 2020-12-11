@@ -92,35 +92,6 @@ void NetworkBuilder::buildGraphSection(std::vector<Vertex> vertexList) {
                     }
                 }   
             }
-            /*lookup = vertexFreqTable.find(v);
-            if (lookup == vertexFreqTable.end()) {
-                vertexFreqTable.insert(std::make_pair(v, 1));
-            } else {
-                if (lookup->second == 1) {
-                    ++lookup->second;
-                }
-                else {
-                    if (lookup->second < 25) {
-                        lookup->second += (log(lookup->second));
-                    }
-                    else if (lookup->second >= 25 && lookup->second < 75) {
-                        lookup->second += log(log(lookup->second));
-                    }
-                    else if(lookup->second >= 75 && lookup->second < 200) {
-                        lookup->second += log(log(log(lookup->second)));
-                    }
-                    else if (lookup->second >= 200 && lookup->second < 400) {
-                        lookup->second += .5 * log(log(log(lookup->second)));
-                    }
-                    else if (lookup->second >= 400 && lookup->second < 800){
-                        lookup->second += .25 * (log(log(log(lookup->second))));
-                    }
-                    else {
-                        lookup->second += .125 * (log(log(log(lookup->second))));
-                    }
-                    
-                }
-            }*/
 
             g_.insertVertex(u);    //inserts source vertex 
             g_.insertVertex(v);     //insert destination
