@@ -13,7 +13,7 @@ class BFS {
         BFS();
         const Graph& traverse(const Graph &g);
         const Graph& getGraph();
-        
+        void printBFS();
 
     private: 
         Graph g_;

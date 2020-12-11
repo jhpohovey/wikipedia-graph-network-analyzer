@@ -10,6 +10,8 @@
 #include "graph.h"
 #include "edge.h"
 #include <map>
+#include <iostream>
+#include <fstream>
 using namespace std;
 
 /**
@@ -73,4 +75,19 @@ void BFS::BFShelper(const Graph &g, const Vertex &v) {
  */
 const Graph& BFS::getGraph() {
     return g_;
+}
+
+/**
+ * @brief prints the source, destination, and label of each edge in the graph to BFSoutput.txt
+ */
+void BFS::printBFS() {
+    ofstream file;
+    file.open("../BFSoutput.txt");
+    for(Edge e : g_.getEdges()) {
+        file << "Source: " << e.source <<std::endl;
+        file << "Destination: " << e.dest <<std::endl;
+        file << "Edge Label: " << g_.getEdgeLabel(e.source, e.dest) <<std::endl;
+        file << " " <<std::endl;
+    }
+    file.close();
 }
