@@ -5,7 +5,7 @@
 Welcome to our CS225 Final Project. We decided to use a wikipedia hyperlink network to create a graph where the vertices consists of all the articles and the edges connect any two articles that are connected via hyperlink. 
 We wanted to accomplish four main goals based on our graph.
 
- Markup : - Traverse each component and vertex in our graph using BFS
+⋅⋅* Traverse each component and vertex in our graph using BFS
           
 
 ## Input File
