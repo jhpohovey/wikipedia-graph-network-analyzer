@@ -4,7 +4,7 @@
 #include "edge.h"
 #include "graph.h"
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <algorithm>
 #include "file_bot.hpp"
 
@@ -15,14 +15,15 @@ class Landmark {
         Landmark(const Graph & graph, Vertex landmark);
         void get_span(const Graph & graph, Vertex landmark);
         void store_path(Vertex begin, Vertex landmark, Vertex end);
-        std::map<Vertex, Vertex> getPred();
+        std::unordered_map<Vertex, Vertex> getPred();
         std::vector<Vertex> getPath();
         void printPath(); 
         int getLength();
 
 
     private:
-        std::map<Vertex, Vertex> pred;
+        std::unordered_map<Vertex, Vertex> pred;
         std::vector<Vertex> path_;
+        Vertex landmark_;
 
 };

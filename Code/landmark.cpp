@@ -1,9 +1,10 @@
 #include "landmark.h"
 #include <queue>
-#include <map>
+#include <unordered_map>
 
 Landmark::Landmark(const Graph & graph, Vertex landmark) {
-    get_span(graph, landmark);
+    landmark_ = landmark;
+    get_span(graph, landmark_);
 }
 
 /*
@@ -15,7 +16,7 @@ Landmark::Landmark(const Graph & graph, Vertex landmark) {
 void Landmark::get_span(const Graph & graph, Vertex landmark){
     
     std::queue<Vertex> q;
-    std::map<Vertex, bool> visited;
+    std::unordered_map<Vertex, bool> visited;
 
     //Set every vertex as being unvisited and no predecessor
     for(Vertex u : graph.getVertices()){
@@ -24,9 +25,9 @@ void Landmark::get_span(const Graph & graph, Vertex landmark){
     }
 
     //Processes landmark vertex as starting point in spanning tree
-    visited[landmark] = true;
-    pred[landmark] = "";
-    q.push(landmark);
+    visited[landmark_] = true;
+    pred[landmark_] = "";
+    q.push(landmark_);
 
     //Modification on BFS to only search one component
     //Keeps track of each vertex's immediate predecessor
@@ -51,6 +52,11 @@ void Landmark::get_span(const Graph & graph, Vertex landmark){
  * through the landmark vertex, and ends at the end vertex
  */
 void Landmark::store_path(Vertex begin, Vertex landmark, Vertex end){
+
+    if (landmark_ != landmark){
+        std::cout << "Sorry you didn't enter your vertices correctly" << std::endl;
+        return;
+    }
 
     //Determine if the vertices of interest are actually conncected
     if (pred[begin] == "" || pred[end] == "" || begin == landmark || end == landmark){
@@ -100,16 +106,23 @@ void Landmark::printPath(){
     }
 
     //Iterate through path and print;
-    std::cout << "Start -> ";
-    for (size_t i = 0; i < path_.size(); i++){
-        std::cout << path_[i] << " -> ";
+    std::cout << "\nShortest path from " << path_[0] << " to " << landmark_ << " to " << path_[path_.size()-1] << ":\n\t{ ";
+    for (size_t i = 0; i < path_.size(); ++i) {
+        if (i < path_.size() - 1) {
+            std::cout << path_[i] << " -> ";
+        }
+        else {
+            std::cout << path_[i] << " }\n" << std::endl;
+        }
     }
-    std::cout << "End" <<std::endl;
+
+            std::cout << "The length of the path from " << path_[0] << " to " << landmark_ << " to " << path_[path_.size()-1] << " is:  " << getLength() << "\n"<< std::endl;
+
 
     return;
 }
 
-std::map<Vertex, Vertex> Landmark::getPred(){
+std::unordered_map<Vertex, Vertex> Landmark::getPred(){
     return pred;
 }
 
