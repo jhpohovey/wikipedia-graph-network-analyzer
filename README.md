@@ -17,7 +17,7 @@ We wanted to accomplish four main goals based on our graph.
 
 By default our code is running on our full data set from http://snap.stanford.edu/data/#wikipedia. To use your own data set, you MUST have a properly formatted input text file. Each line in the file must contain strings seperated by ";" where the strings are the vertices and a ";" represents a connection between the previous string and the following string.
 
-Example:
+__Example:__
 
 ```bash
 14th_century;Europe;Africa;Atlantic_slave_trade;African_slave_trade
@@ -43,15 +43,15 @@ const Graph& g = nb.getGraph(); //returns a reference to the graph
 Determine the least number of connections for a path between two nodes through any intermediate node.
 
 
-Create the object using the reference to our graph and the given intermediate "landmark" node in path. Store the path using __store_path(startingVertex, mark, destination)__. You can modify those input vertices by changing their previous declaration. Make sure all inputs are actually part of the data set. The startingVertex and destination are allowed to be the same but they __CANNOT__ be the same as the mark. Call __printPath()__ to print out any valid path and its length (number of edgest travelled).
+Create the object using the reference to our graph and the given intermediate "landmark" node in path. Store the path using __store_path(startingVertex, mark, destination)__. You can modify those input vertices by changing their previous declaration. Make sure all inputs are actually part of the data set. The startingVertex and destination are allowed to be the same but they __CANNOT__ be the same as the landmark. Call __printPath()__ to print out any valid path and its length (number of edgest travelled).
 
 ```bash
 startingVertex = "14th_century";    //starting vertex
 destination = "Africa";             //destination vertex
-Vertex mark = "Atlantic_Ocean";     //landmark(intermediat) vertex
+Vertex landmark = "Atlantic_Ocean";     //landmark(intermediat) vertex
 
-Landmark lm(g, mark);                                   //creates path between vertices
-lm.store_path(startingVertex, mark, destination);       //stores any valid path
+Landmark lm(g, landmark);                                //creates path between vertices
+lm.store_path(startingVertex, landmark, destination);   //stores any valid path
 lm.printPath();                                         //prints based on what has been stored
 ```
 
