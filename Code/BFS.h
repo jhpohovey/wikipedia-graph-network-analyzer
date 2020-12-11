@@ -11,11 +11,12 @@
 class BFS {
     public: 
         BFS();
-        Graph BFScomplete(const Graph &g);
-        void BFShelper(const Graph &g, const Vertex &v);
-        Graph getGraphBFS(Graph );
-        Graph g_;
+        const Graph& traverse(const Graph &g);
+        const Graph& getGraph();
+        
 
     private: 
+        Graph g_;
         std::map<Vertex, bool> beenVisited_;   
+        void BFShelper(const Graph &g, const Vertex &v);
 };

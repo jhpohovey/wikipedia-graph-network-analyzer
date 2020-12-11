@@ -15,15 +15,16 @@ using namespace std;
 /**
  * @brief BFS constructor
  */
-BFS::BFS() : g_(true,false){
+BFS::BFS() : g_(true,false) {
+    //do nothing
 }
 
 /**
  * @brief Breadth First Search Traversal on a graph
- * @param graph - graph being traversed
- * @return a graph with labeled edges
+ * @param graph - Graph to be traversed
+ * @return A graph with edges labeled either "CROSS" or "DISCOVERY"
  */
-Graph BFS::BFScomplete(const Graph &g)  {
+const Graph& BFS::traverse(const Graph &g)  {
     Vertex v = g.getStartingVertex();
     for(Vertex v : g.getVertices()){
         g_.insertVertex(v);
@@ -44,9 +45,9 @@ Graph BFS::BFScomplete(const Graph &g)  {
 /**
  * @brief BFS traversal helper that labels connected vertices
  * @param graph - graph being traversed
- * @param vertex - head vertex 
+ * @param vertex - start vertex 
  */
-void BFS::BFShelper(const Graph &g,const Vertex &v) {
+void BFS::BFShelper(const Graph &g, const Vertex &v) {
     std::queue<Vertex> q;
     Vertex temp;
     beenVisited_.at(v) = true;
@@ -67,12 +68,9 @@ void BFS::BFShelper(const Graph &g,const Vertex &v) {
 }
 
 /**
- * @brief runs BFS traversal on graph and returns the graph with BFS labels
- * @param graph - graph being traversed
+ * @brief gets a constant reference to the graph after the traversal occurs
  * @return graph that has been traversed using BFS
  */
-Graph BFS::getGraphBFS(Graph g) {
-    BFS bfs;
-    Graph temp = bfs.BFScomplete(g);
-    return temp;
+const Graph& BFS::getGraph() {
+    return g_;
 }

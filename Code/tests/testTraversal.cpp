@@ -22,7 +22,7 @@ TEST_CASE("testing one line for all discovery (Discovery Edge Test)", "[part=bfs
     
     const Graph& g = nb.getGraph();
     BFS test;
-    Graph result = test.BFScomplete(g);
+    Graph result = test.traverse(g);
     
     for(Edge e : result.getEdges()){
         REQUIRE(result.getEdgeLabel(e.source,e.dest) == "DISCOVERY");
@@ -35,7 +35,7 @@ TEST_CASE("Graph with disconnected nodes", "[part=bfs]") {//done
     
     const Graph& g = nb.getGraph();
     BFS test;
-    Graph result = test.BFScomplete(g);
+    Graph result = test.traverse(g);
 
     REQUIRE(result.edgeExists("A", "B") == true);
     REQUIRE(result.edgeExists("B", "C") == true);
@@ -58,7 +58,7 @@ TEST_CASE("Graph with a disconnected vertex", "[part=bfs]") {//done
     
     const Graph& g = nb.getGraph();
     BFS test;
-    Graph result = test.BFScomplete(g);
+    Graph result = test.traverse(g);
 
     REQUIRE(result.vertexExists("A") == true);
     REQUIRE(result.vertexExists("B") == true);
@@ -79,7 +79,7 @@ TEST_CASE("Graph with discovery and cross edges 1", "[part=bfs]") {//done
     
     const Graph& g = nb.getGraph();
     BFS test;
-    Graph result = test.BFScomplete(g);
+    Graph result = test.traverse(g);
 
     REQUIRE(result.vertexExists("A") == true);
     REQUIRE(result.vertexExists("B") == true);
@@ -111,7 +111,7 @@ TEST_CASE("Graph with discovery and cross edges 2", "[part=bfs]") {
     
     const Graph& g = nb.getGraph();
     BFS test;
-    Graph result = test.BFScomplete(g);
+    Graph result = test.traverse(g);
 
     REQUIRE(result.vertexExists("A") == true);
     REQUIRE(result.vertexExists("B") == true);
@@ -145,7 +145,7 @@ TEST_CASE("Graph with discovery and cross edges 3", "[part=bfs]") {
     const Graph& g = nb.getGraph();
     BFS test;
     Vertex v = "A";
-    Graph result = test.BFScomplete(g);
+    Graph result = test.traverse(g);
 
     bool REQ = false;
 
