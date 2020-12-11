@@ -32,7 +32,7 @@ std::string filename = "file/path.txt"
 
 ## NetworkBuilder
 
-Constructs network graph based on input file. Using the following lines you must create the NetworkBuilderObject which stores the data. Then to construct the graph you must call constructGraph(). To access the graph we recommend storing the graph as a constant reference.
+Constructs network graph based on input file. Using the following lines you must create the NetworkBuilder object which stores the data. Then to construct the graph you must call __constructGraph()__. To access the graph we recommend storing the graph as a constant reference.
 
 ```bash
 NetworkBuilder nb (filename);   //stores data
@@ -43,16 +43,15 @@ const Graph& g = nb.getGraph(); //returns a reference to the graph
 Determine the least number of connections for a path between two nodes through any intermediate node.
 
 
-Create the object using the reference to our graph and the given intermediate "landmark" node in path. Store the path using store_path(startingVertex, mark, destination). You can modify those input vertices by changing their previous declaration. Make sure all inputs are actually part of the data set. The startingVertex and destination are allowed to be the same but they CANNOT be the same as the mark. Call printPath() to print out any valid path and its length (number of edgest travelled).
+Create the object using the reference to our graph and the given intermediate "landmark" node in path. Store the path using __store_path(startingVertex, mark, destination)__. You can modify those input vertices by changing their previous declaration. Make sure all inputs are actually part of the data set. The startingVertex and destination are allowed to be the same but they __CANNOT__ be the same as the mark. Call __printPath()__ to print out any valid path and its length (number of edgest travelled).
 
 ```bash
-//
 startingVertex = "14th_century";    //starting vertex
 destination = "Africa";             //destination vertex
 Vertex mark = "Atlantic_Ocean";     //landmark(intermediat) vertex
 
-Landmark lm(g, mark);       //creates path between vertices
+Landmark lm(g, mark);                                   //creates path between vertices
 lm.store_path(startingVertex, mark, destination);       //stores any valid path
-lm.printPath();     //prints based on what has been stored
+lm.printPath();                                         //prints based on what has been stored
 ```
 
