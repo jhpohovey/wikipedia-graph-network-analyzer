@@ -5,7 +5,11 @@
 Welcome to our CS225 Final Project. We decided to use a wikipedia hyperlink network to create a graph where the vertices consists of all the articles and the edges connect any two articles that are connected via hyperlink. 
 We wanted to accomplish four main goals based on our graph.
 
-⋅⋅* Traverse each component and vertex in our graph using BFS
+1. Traverse each component and vertex in our graph using BFS
+2. Implement Dijskta’s shortest path algorithm on our graph with set weights to determine the path between two vertices with the lowest combined edge weights
+3.Use the landmark path algorithm to determine the least number of connections for a path between two nodes through any intermediate node.
+4.Create a visual output that is visually appealing and also informational using the vertices and edges in our graph
+
           
 
 ## Input File
@@ -21,11 +25,16 @@ Example:
 This file will be used to construct our graph and can easily be storeds by modifying the following line to include the correct file path.
 
 ```bash
-td::string filename = "file/path.txt"
+std::string filename = "file/path.txt"
 ```
 
 ## NetworkBuilder
 
+Constructs network graph based on input file. Using the following lines you must create the NetworkBuilderObject which stores the data. Then to construct the graph you must call constructGraph(). To access the graph we recommend storing the graph as a constant reference.
 
-
+```bash
+NetworkBuilder nb (filename);   //stores data
+nb.constructGraph();            //creates graph
+const Graph& g = nb.getGraph(); //returns a reference to the graph
+```
 
