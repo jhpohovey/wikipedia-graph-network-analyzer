@@ -11,7 +11,7 @@
 
 int main() {
   //name of the file to read from (throws SIGABRT if cannot read i.e. path incorrect)
-  std::string filename = "tests/Sample1.txt";
+  std::string filename = "tests/FullData.txt";
   std::cout << "File in use: " << filename << std::endl;
 
   // Initilization phase
@@ -49,11 +49,11 @@ int main() {
   lm.printPath();
 
 
-  //To create a graph visualization
+  //To create a graph visualization (please comment this last section out for a much faster run time)
   std::cout << "\nCalling Graph Visualizer..." << std::endl;
-  GraphVisualizer gv(nb, 100, 100);
-  gv.FruchtermanReingold(5);
-  cs225::PNG png = gv.drawGraph(true);
+  GraphVisualizer gv(nb, 10000, 10000); //make sure to change width/height for different data sizes
+  gv.FruchtermanReingold(3);
+  cs225::PNG png = gv.drawGraph(true); //true for circle representation of vertices, false for square
   png.writeToFile("Output_Graph.png");
   return 0;
 }
