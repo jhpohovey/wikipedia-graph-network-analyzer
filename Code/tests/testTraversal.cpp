@@ -15,7 +15,7 @@
 #include "../priorityqueue.h"
 #include "../BFS.h"
 
-TEST_CASE("testing one line for all discovery (Discovery Edge Test)", "[part=bfs]") {//done
+TEST_CASE("testing one line for all discovery (Discovery Edge Test)", "[part=bfs]") {
 
     NetworkBuilder nb("tests/SingleLine.txt");
     nb.constructGraph();
@@ -29,7 +29,7 @@ TEST_CASE("testing one line for all discovery (Discovery Edge Test)", "[part=bfs
     }
 }
 
-TEST_CASE("Graph with disconnected nodes", "[part=bfs]") {//done
+TEST_CASE("Graph with disconnected nodes", "[part=bfs]") {
     NetworkBuilder nb("tests/Disconnected.txt");
     nb.constructGraph();
     
@@ -52,7 +52,7 @@ TEST_CASE("Graph with disconnected nodes", "[part=bfs]") {//done
     REQUIRE(result.getEdgeLabel("G","H") == "DISCOVERY");   
 }
 
-TEST_CASE("Graph with a disconnected vertex", "[part=bfs]") {//done
+TEST_CASE("Graph with a disconnected vertex", "[part=bfs]") {
     NetworkBuilder nb("tests/unexplored.txt");
     nb.constructGraph();
     
@@ -73,7 +73,7 @@ TEST_CASE("Graph with a disconnected vertex", "[part=bfs]") {//done
     REQUIRE(result.getEdgeLabel("B","C") == "DISCOVERY"); 
 }
 
-TEST_CASE("Graph with discovery and cross edges 1", "[part=bfs]") {//done
+TEST_CASE("Graph with discovery and cross edges 1", "[part=bfs]") {
     NetworkBuilder nb("tests/crossedge.txt");
     nb.constructGraph();
     
@@ -161,7 +161,7 @@ TEST_CASE("Graph with discovery and cross edges 3", "[part=bfs]") {
             REQ = true;
         }
     }
-    //if starting vertes at "C"
+    //if starting vertex at "C"
     if(result.getEdgeLabel("A","C") == "DISCOVERY"&&result.getEdgeLabel("A","D") == "CROSS"&&result.getEdgeLabel("C","D") == "DISCOVERY"&&result.getEdgeLabel("E","C") == "DISCOVERY"){
         if((result.getEdgeLabel("A","B") == "DISCOVERY"&&result.getEdgeLabel("B","E") == "CROSS") || (result.getEdgeLabel("A","B") == "CROSS"&&result.getEdgeLabel("B","E") == "DISCOVERY")){
             REQ = true;
