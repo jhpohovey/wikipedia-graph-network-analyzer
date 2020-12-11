@@ -1,3 +1,13 @@
+/**
+ * @file Network.h
+ * @author John Pohovey
+ * @brief 
+ * @version 0.1
+ * @date December 2020
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 
 #pragma once
 #include <string>
@@ -13,6 +23,8 @@ typedef std::string Vertex;
 
 class NetworkBuilder {
     public:
+        //implementations notes on function, parameters, returns, etc are all located in the .cpp file
+
         NetworkBuilder();
         NetworkBuilder(const std::string & filename);
         Graph& constructGraph();
@@ -27,6 +39,8 @@ class NetworkBuilder {
         //each element in outer vector represents each line of the .txt file
         //each element j at every vector[i] represents the individual links from one line
         std::vector<std::vector<std::string>> data_;
+
+        //records the each vertex's frequency of occurrence within the .txt file
         std::unordered_map<Vertex, double> vertexFreqTable;
 
 };
