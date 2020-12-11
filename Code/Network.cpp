@@ -17,6 +17,8 @@ NetworkBuilder::NetworkBuilder(const std::string & filename) : g_(true, false) {
  * @return Graph for traversal, other algorithms
  */
 Graph& NetworkBuilder::constructGraph() {
+
+    //in case no data has been stored for graph
     if (data_.empty()) {
         std::cout << "Data structure was not correctly populated" << std::endl;
         g_.insertVertex("N O P E");
@@ -32,6 +34,7 @@ Graph& NetworkBuilder::constructGraph() {
         return g_;
     }
 
+    //builds the graph line by line from data
     for (size_t i = 0; i < data_.size(); ++i) {
         buildGraphSection(data_[i]);
     }
@@ -45,6 +48,9 @@ Graph& NetworkBuilder::constructGraph() {
  * @param vertexList, a vector of strings representing one line from the input file
  */
 void NetworkBuilder::buildGraphSection(std::vector<Vertex> vertexList) {
+
+    //inserts vertices and corresponding edges and weights
+    //does something with a frequency table
     if (vertexList.size() > 1) {
         for (size_t i = 0; i < vertexList.size() - 1; ++i) {
             Vertex u = vertexList.at(i);
@@ -110,21 +116,17 @@ void NetworkBuilder::buildGraphSection(std::vector<Vertex> vertexList) {
                 }
             }
 
-            g_.insertVertex(u);
-            g_.insertVertex(v);
-            g_.insertEdge(u, v);
-            int weight = u.length() <= v.length() ? u.length() : v.length();
-            g_.setEdgeWeight(u,v, weight);
+            g_.insertVertex(u);    //inserts source vertex 
+            g_.insertEdge(u, v);   //inserts destingation vertex
+            int weight = u.length() <= v.length() ? u.length() : v.length(); //calculates edge weight
+            g_.setEdgeWeight(u,v, weight);   //sets edge weight
         }
     }
+
+    //accounts for case of only one vertex on a line
     else if (vertexList.size() == 1) {
         Vertex v1 = vertexList.at(0);
-         g_.insertVertex(v1);
-    }
-
-    for (auto it = vertexFreqTable.begin(); it != vertexFreqTable.end(); ++it) {
-        //std::cout << "Vertex: " << it->first;
-        //printf(", Freq: %f\n", it->second);
+         g_.insertVertex(v1); //insert single vertex
     }
 }
 
