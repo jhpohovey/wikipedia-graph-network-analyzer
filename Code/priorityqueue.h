@@ -1,3 +1,16 @@
+/**
+ * @file Network.h
+ * @author John Pohovey
+ * @brief Augments the STL priority_queue to act as a Min-heap for pairs of Vertex and ints,
+ *        a Vertex and its distance from the start vertex. For use with Dijkstra's 
+ *        Shortest Path Algorithm
+ * @version 0.1
+ * @date December 2020
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
 #pragma once
 
 #include <queue>
@@ -8,8 +21,12 @@
 
 typedef std::string Vertex;
 
+/**
+ * @brief Custom compare class for Min-heap functionality on pairs
+ * 
+ */
 class Compare {
-    public:
+    public: 
         int operator() (const std::pair<Vertex, int>& i, const std::pair<Vertex, int>& j) {
             return i.second > j.second;
         }
