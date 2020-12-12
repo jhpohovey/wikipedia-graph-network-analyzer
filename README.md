@@ -11,6 +11,8 @@ We wanted to accomplish four main goals based on our graph.
 
 4. Create a visual output that is visually appealing and also informational using the vertices and edges in our graph
 
+The link to our video presentation is here: https://youtu.be/H7yv_udKLHE
+
           
 
 ## Input File
