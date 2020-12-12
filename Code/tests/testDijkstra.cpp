@@ -165,6 +165,12 @@ TEST_CASE("Shortest Paths found on small graph (|V| = 4) Easy", "[part=sssp][par
     int cost = djsp.calculateCostToVertex("Dragonfruit");
     REQUIRE(cost == 15); // A to B = 5, B to C = 5, C to D = 5; 5 + 5 + 5 = 15 < 20
 
+    std::vector<Vertex> path = djsp.pathToDestination("Dragonfruit");
+    REQUIRE(path.size() == 4);
+    REQUIRE(path[0] == "Apple");
+    REQUIRE(path[1] == "Banana");
+    REQUIRE(path[2] == "Carrot");
+    REQUIRE(path[3] == "Dragonfruit");
 }
 
 TEST_CASE("Shortest Paths found on small graph (|V| = 4) Med", "[part=sssp][part=find]") {
@@ -530,6 +536,10 @@ TEST_CASE("Checks that on a graph with disconnected subgraphs, algorithm can det
 
     connected = djsp.checkConnectivity("Banana");
     REQUIRE(connected == true);
+
+    std::vector<Vertex> path = djsp.pathToDestination("Not_Connected_Vertex");
+    REQUIRE(path.size() == 1);
+    REQUIRE(path[0] == "Destination is not connected to starting vertex, so no shortest path exists.");
 }
 
 TEST_CASE("Check that Dijkstra's algorithm does not run on a disconnected starting vertex", "[part=sssp][part=cost]") {
