@@ -179,6 +179,11 @@ TEST_CASE("Graph with discovery and cross edges 3", "[part=bfs]") {
             REQ = true;
         }
     }
+    REQUIRE(result.vertexExists("A") == true);
+    REQUIRE(result.vertexExists("B") == true);
+    REQUIRE(result.vertexExists("C") == true);
+    REQUIRE(result.vertexExists("D") == true);
+    REQUIRE(result.vertexExists("E") == true);
     REQUIRE(REQ == true);
 
     /*
