@@ -24,8 +24,8 @@ int main() {
   //Perform BFS Traversal on graph built above
   std::cout << "\nCalling BFS..." << std::endl;
   BFS bfs;
-  bfs.traverse(g); //writes the order of the vertices visisted to .TXT file
-
+  bfs.traverse(g); 
+  bfs.printBFS(); //writes the order of the vertices visisted to .TXT file
 
   //Use Dijktra's Algorithm to compute the shortest path from a starting vertex to every other connected point in the graph
   std::cout << "\nCalling Dijkstra's Algorithm..." << std::endl;

@@ -40,6 +40,19 @@ nb.constructGraph();            //creates graph
 const Graph& g = nb.getGraph(); //returns a reference to the graph
 ```
 
+## BFS
+
+Traverses an already built graph and labels the edges as either CROSS or DISCOVERY according to Breadth First Search traversal algorithm by searching the graph "wide" before searching "deep".
+
+Creating an object of the BFS class does not require any arguments. Once you have an object of the BFS class, you can create a graph with the edges labeled according to the BFS traversal algorithm by using __traverse(graph)__. This function returns a graph with all edges labeled as either CROSS or DISCOVERY. To see the output with labeled edges, run __printBFS()__. This function will write all edges with their source vertex, destination vertex, and label to the file named BFSoutput.txt. 
+
+```bash
+const Graph &g = nb.getGraph(); //returns a reference to the graph from network builder
+BFS bfs;                        //initializes a BFS-type object
+Graph result = bfs.traverse(g); //returns the graph with completed BFS edge labels
+bfs.printBFS();                 //writes all the edges of the graph to a .TXT file with its source, destination, and label
+```
+
 ## DijkstraSSSP
 Determines the shortest (and/or lowest weight) path from a starting vertex to every other connected vertex in the graph. Edge weights are determined by choosing the lesser of the two lengths of two vertices connected by that edge.
 
